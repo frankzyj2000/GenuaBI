@@ -1,0 +1,316 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Dashboard
+@using GenuinaBI.Resources.Shared
+@using GenuinaBI.Configuration
+@using GenuinaBI.Extensions
+@using System.Security.Claims;
+@model UIChartModel
+@{
+    // EXAMPLE:
+    // Using the ViewBag on a page to set the title and sub-title
+    // This will cause the _GenuinaBILayout to include this value in the page title
+    // And also set the top titles in the main content area of the page
+    ViewBag.Title = SlotOccupation.Title;
+    var routeValues = this.ViewContext.RouteData.Values;
+    var currentLang = routeValues["lang"] as string;
+    // EXAMPLE:
+    // Using the Breadcrumb class to create a dynamically generated breadcrumb on the page with
+    // Titles, plus optional icon and URLs
+    ViewBag.Breadcrumb = new Breadcrumb(new Crumb[] {
+        new Crumb(PageResources.Home, Url.Action("Index", "Dashboard", new { lang = @currentLang }), "fa-dashboard"),
+        new Crumb(PageResources.Dashboard, "", "fa-dashboard"),
+        new Crumb(PageResources.SlotOccupation, "", "active")
+    });
+    var dateParameter = "";
+    var pageLength = 10;
+    if (Model.QueryParameter != null)
+    {
+        dateParameter = ((SlotOccupationParameters)Model.QueryParameter).Start;
+        pageLength = ((SlotOccupationParameters)Model.QueryParameter).PageLength;
+    }
+    var user = User.Identity as ClaimsIdentity;
+}
+@section styles {
+    @Styles.Render("~/Content/datatables_css")
+    @Styles.Render("~/Content/daterangepicker_css")
+    @Styles.Render("~/Content/icheck_css")
+    @Styles.Render("~/Content/simon_css")
+}
+                <div id="warningToDefaultDateRange" class="modal modal-warning fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">@GeneralResources.Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>@GeneralResources.ConfirmDefaultDate</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnDefaultDateYes" type="button" class="btn btn-outline pull-left" data-value="1">@GeneralResources.BtnYes</button>
+                                <button id="btnDefaultDateNo" type="button" class="btn btn-outline" data-dismiss="modal" data-value="0">@GeneralResources.BtnNo</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <form id="gbiForm">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-8 col-xs-12">
+                            <div class="box box-info">
+                                <div class="box-body">
+                                @if (Config.RefreshTimeOut > 0) {
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="control-label">@GeneralResources.SelectDate</label>
+                                            <div class="input-group input-group-sm">
+                                                <span id="btDateRange" class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" name="daterange" class="form-control input-sm" value="@dateParameter">
+                                                <input type="hidden" name="queryParam[start]" value="@dateParameter">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6  col-xs-12">
+                                            <label class="control-label" id="labelAutoRefresh" title="@GeneralResources.CheckFreshTooltip">
+                                                @GeneralResources.AutoRefresh
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn">
+                                                    <div id="buttonAutoRefresh" class="toggle toggle-light"></div>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-8 col-xs-12">
+                                            <label class="control-label">@GeneralResources.SelectDate</label>
+                                            <div class="input-group input-group-sm">
+                                                <span id="btDateRange" class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" name="daterange" class="form-control input-sm" value="@dateParameter">
+                                                <input type="hidden" name="queryParam[start]" value="@dateParameter">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4  col-xs-12">
+                                            <label class="control-label">&nbsp;</label>
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div id="firstRow" class="row">
+                    <div id="boxIndicator" class="col-lg-9 col-md-8 col-xs-12">
+                        <div class="row">
+                                @{
+                                    Model.InfoListBox = new InfoListBoxModel(null, "boxTotalHandle", "TotalHandle", SlotOccupation.NumberTotalHandle, OperationSummary.WinSlotTooltip, "ion-social-usd-outline", "bg-green", "col-lg-4 col-xs-6", "", null);
+                                    Html.RenderPartial("../Shared/ShowInfoBox", Model);
+
+                                    Model.InfoListBox = new InfoListBoxModel(null, "boxTotalWin", "TotalWin", SlotOccupation.NumberTotalWin, "", "ion-social-usd-outline", "bg-aqua", "col-lg-4 col-xs-6", "", null);
+                                    Html.RenderPartial("../Shared/ShowInfoBox", Model);
+
+                                    Model.InfoListBox = new InfoListBoxModel(null, "boxTotalVisitors", "TotalVisitors", SlotOccupation.NumberTotalVisitors, "", "ion-ios-people", "bg-blue", "col-lg-4 col-xs-6", "", null);
+                                    Html.RenderPartial("../Shared/ShowInfoBox", Model);
+
+                                    Model.InfoListBox = new InfoListBoxModel(null, "boxTotalSlotOccupied", "TotalSlotOccupied", SlotOccupation.NumberTotalSlotOccupied, "", "fa fa-hourglass-end", "bg-yellow", "col-lg-4 col-xs-6", "", null);
+                                    Html.RenderPartial("../Shared/ShowInfoBox", Model);
+
+                                    Model.InfoListBox = new InfoListBoxModel(null, "boxTotalSlots", "TotalSlots", SlotOccupation.NumberTotalSlots, "", "fa fa-hourglass-o", "bg-green", "col-lg-4 col-xs-6", "", null);
+                                    Html.RenderPartial("../Shared/ShowInfoBox", Model);
+
+                                    Model.InfoListBox = new InfoListBoxModel(null, "boxSlotsOccupationRate", "SlotsOccupationRate", SlotOccupation.NumberSlotsOccupationRate, "", "ion-pie-graph", "bg-aqua", "col-lg-4 col-xs-6", "", null);
+                                    Html.RenderPartial("../Shared/ShowInfoBox", Model); }
+                        </div>
+                    </div>
+                    <div id="boxSlotOccupationChart" class="box-container col-lg-3 col-md-4 col-xs-12">
+                        <div class="box box-primary">
+                            <!-- DONUT CHART -->
+                            <div class="box-header with-border">
+                                <h3 class="box-title">@SlotOccupation.TitleGrandTotalsSlots</h3>
+                                @{  Model.InfoBox = new InfoBoxModel("SlotsOccupationRateIndicator"); }
+                                <div class="box-tools pull-right">
+                                    @Html.Partial("ShowBoxControlButtons", Model)
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <canvas id="slotTotalDonutChart"></canvas>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <ul class="chart-legend clearfix">
+                                            <li><i class="fa fa-circle-o text-gray"></i><small> <span id="DataSlotEmpty"></span> @OperationSummary.SlotEmpty</small></li>
+                                            <li><i class="fa fa-circle-o text-light-blue"></i><small> <span id="DataSlotOccupied"></span> @OperationSummary.SlotOccupied</small></li>
+                                            <!-- /.box-body -->
+                                        </ul>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        @{  
+                          Model.InfoBox = new InfoBoxModel("VisitorsPerHourChart", SlotOccupation.TitleVisitorsPerHour, "chartPlayers", "col-lg-4 col-md-6 col-xs-12");
+                          Html.RenderPartial("../Shared/ShowChartLengendBox", Model);
+                          Model.InfoBox = new InfoBoxModel("SlotsPerHourChart", SlotOccupation.TitleSlotsPerHour, "chartSlots", "col-lg-4 col-md-6 col-xs-12");
+                          Html.RenderPartial("../Shared/ShowChartLengendBox", Model);
+                          Model.InfoBox = new InfoBoxModel("SessionsPerHourChart", SlotOccupation.TitleSessionsPerHour, "chartSessions", "col-lg-4 col-md-6 col-xs-12");
+                          Html.RenderPartial("../Shared/ShowChartLengendBox", Model);
+                          Model.InfoBox = new InfoBoxModel("OccupationRatePerHourChart", SlotOccupation.TitleRatesPerHour, "chartRates", "col-lg-4 col-md-6 col-xs-12");
+                          Html.RenderPartial("../Shared/ShowChartLengendBox", Model); 
+                          Model.InfoBox = new InfoBoxModel("HandlesPerHourChart", SlotOccupation.TitleHandlesPerHour, "chartHandles", "col-lg-4 col-md-6 col-xs-12");
+                          Html.RenderPartial("../Shared/ShowChartLengendBox", Model); 
+                          Model.InfoBox = new InfoBoxModel("WinLossPerHourChart", SlotOccupation.TitleWinlossPerHour, "chartWins", "col-lg-4 col-md-6 col-xs-12");
+                          Html.RenderPartial("../Shared/ShowChartLengendBox", Model); }
+                    <div id="boxOccupationList" class="box-container col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h6 id="occupationlist_title" class="box-title"></h6>
+                                @{  Model.InfoBox = new InfoBoxModel("SlotOccupationTable"); }
+                                <div class="box-tools pull-right">
+                                    @Html.Partial("ShowBoxControlButtons", Model)
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="occupationlist" class="table table-bordered table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>@SlotOccupation.OccupationTableTime</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTablePlayers</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableSlots</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableSessions</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableRate</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableHandle</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableWin</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableStartTime</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>@SlotOccupation.OccupationTableTime</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTablePlayers</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableSlots</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableSessions</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableRate</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableHandle</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableWin</th>
+                                            <th class="dt-right">@SlotOccupation.OccupationTableStartTime</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <section class="resouceLabels"
+                    data-start="@GeneralResources.LabelStart"
+                    data-end="@GeneralResources.LabelEnd"
+                    data-from="@GeneralResources.LabelFrom"
+                    data-to="@GeneralResources.LabelTo"
+                    data-slot-occupied="@OperationSummary.SlotOccupied"
+                    data-slot-empty="@OperationSummary.SlotEmpty"
+                    data-datatablelanguage="@GeneralResources.DataTableLanguage"
+                    data-casinostarttime="@Config.CasinoStartTime"
+                    data-casinoendtime="@Config.CasinoEndTime"
+                    data-refreshtimeout="@Config.RefreshTimeOut"
+                    data-timeformat="@Config.CasinoTimeFormat"
+                    data-dateformat="@Config.CasinoDateFormat"
+                    data-currencythousand="@Config.CasinoCurrencyThousand"
+                    data-currencysymbol="@Config.CasinoCurrencySymbol"
+                    data-currencydecimal="@Config.CasinoCurrencyDecimal"
+                    data-currencyprecision="@Config.CasinoCurrencyPrecision"
+                    data-logclienterror="@Config.LogClientError"
+                    data-defaultstartdate="@Model.DefaultStartDate"
+                    data-defaultenddate="@Model.DefaultEndDate"
+                    data-pagelength="@pageLength"
+                    data-servercache="@Config.SlotOccupationServerCache"
+                    data-sessiontimeout ="@Config.SessionTimeOut"
+                    data-warningbeforesessiontimeout ="@Config.WarningBeforeSessionTimeOut"
+                    data-sessionexpired ="@GeneralResources.SessionExpired"
+                    data-sessionexpirein ="@GeneralResources.SessionExpireIn"
+                    data-sessionhour ="@GeneralResources.SessionHour"
+                    data-sessionsecond ="@GeneralResources.SessionSecond"
+                    data-sessionminute ="@GeneralResources.SessionMinute"
+                    data-btnchoosecolumn="@GeneralResources.BtnChooseColumn"
+                    data-btnexcel="@GeneralResources.BtnExcel"
+                    data-btnpdf="@GeneralResources.BtnPdf"
+                    data-btnprint="@GeneralResources.BtnPrint"
+                    data-menuquit="@GeneralResources.MenuQuit"
+                    data-menuadd="@GeneralResources.MenuAdd"
+                    data-menurestore="@GeneralResources.MenuRestore"
+                    data-menusave="@GeneralResources.MenuSave"
+                    data-querywaitinginfo="@GeneralResources.QueryWaitingInfo"
+                    data-daterangeerror="@GeneralResources.DateRangeError"
+                    data-daterangecustom="@GeneralResources.DateRangeCustom"
+                    data-daterangefrom="@GeneralResources.DateRangeFrom"
+                    data-daterangeto="@GeneralResources.DateRangeTo"
+                    data-daterangeoutoflimit="@GeneralResources.DateRangeOutOfLimit"
+                    data-daterangelanguage="@GeneralResources.DateRangeLanguage"
+                    data-daterangeapply="@GeneralResources.DateRangeApply"
+                    data-parameteryearerror="@GeneralResources.ParameterYearError"
+                    data-titlegrandtotalslots="@SlotOccupation.TitleGrandTotalsSlots"
+                    data-titlevisitorsperhour="@SlotOccupation.TitleVisitorsPerHour"
+                    data-titleslotsperhour="@SlotOccupation.TitleSlotsPerHour"
+                    data-titlesessionsperhour="@SlotOccupation.TitleSessionsPerHour"
+                    data-titleratesperhour="@SlotOccupation.TitleRatesPerHour"
+                    data-titlehandlesperhour="@SlotOccupation.TitleHandlesPerHour"
+                    data-titlewinlossperhour="@SlotOccupation.TitleWinlossPerHour"
+                    data-numbertotalhandle="@SlotOccupation.NumberTotalHandle"
+                    data-numbertotalwin="@SlotOccupation.NumberTotalWin"
+                    data-numbertotalvisitor="@SlotOccupation.NumberTotalVisitors"
+                    data-numbertotalslots="@SlotOccupation.NumberTotalSlots"
+                    data-numbertotalslotsoccupied="@SlotOccupation.NumberTotalSlotOccupied"
+                    data-numberrateslots="@SlotOccupation.NumberSlotsOccupationRate"
+                    data-columntime="@SlotOccupation.OccupationTableTime"
+                    data-columnplayers="@SlotOccupation.OccupationTablePlayers"
+                    data-columnslots="@SlotOccupation.OccupationTableSlots"
+                    data-columnsessions="@SlotOccupation.OccupationTableSessions"
+                    data-columnrate="@SlotOccupation.OccupationTableRate"
+                    data-columnhandle="@SlotOccupation.OccupationTableHandle"
+                    data-columnwin="@SlotOccupation.OccupationTableWin"
+                    data-minimumparameteryear="@Config.MinimumParameterYear"
+                    data-daterangecancel="@GeneralResources.DateRangeCancel"
+                    data-reportname="@Constants.ReportName.SlotOccupation"
+                    data-title="@SlotOccupation.Title"
+                    data-username="@user.Name"
+                    data-total="@GeneralResources.Total">
+                </section>
+@section scripts {
+    <!-- page script -->
+    @*NOTE: These do contains useful snippets on how to setup charts*@
+    <!-- DataTables for jQuery -->
+    @Scripts.Render("~/bundles/datatable")
+    @*NOTE: These contains useful snippets on how to setup charts*@
+    <!-- ChartJS 1.0.2 -->
+    @Scripts.Render("~/bundles/chartjs")
+    <!-- Date Range Picker -->
+    @Scripts.Render("~/bundles/daterangepicker")
+    @Scripts.Render("~/bundles/icheck")
+    @Scripts.Render("~/bundles/simon")
+    @Scripts.Render("~/bundles/accounting")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="@StaticFile.Version("/Scripts/pages/slotOccupation.js")"></script>
+}

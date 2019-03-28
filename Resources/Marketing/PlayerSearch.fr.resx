@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SubTitleActivityDay" xml:space="preserve">
+    <value>Activity during the day</value>
+  </data>
+  <data name="SubTitleActivityMonth" xml:space="preserve">
+    <value>Activity during the last month</value>
+  </data>
+  <data name="SubTitleActivityQuarter" xml:space="preserve">
+    <value>Activity during the last quarter</value>
+  </data>
+  <data name="SubTitlePreferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="SubTitleVisitTrends" xml:space="preserve">
+    <value>Visit Frequency Trend (Last 3 Months)</value>
+  </data>
+  <data name="SubTitleSpendingTrends" xml:space="preserve">
+    <value>Spending Trends (Last 3 Months)</value>
+  </data>
+  <data name="SubTitleProfile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="SubTitleAccountInfo" xml:space="preserve">
+    <value>Account Info</value>
+  </data>
+  <data name="SubTitleAdditionalInfo" xml:space="preserve">
+    <value>AdditionalInfo</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Player Search</value>
+  </data>
+  <data name="AcctBalance" xml:space="preserve">
+    <value>Account Balance:</value>
+  </data>
+  <data name="MKCategory" xml:space="preserve">
+    <value>Category:</value>
+  </data>
+  <data name="MKCredit" xml:space="preserve">
+    <value>Credits non Redeemable:</value>
+  </data>
+  <data name="AcctHandle" xml:space="preserve">
+    <value>Handle:</value>
+  </data>
+  <data name="MKLoyaltyAvailable" xml:space="preserve">
+    <value>Loyality Points Available:</value>
+  </data>
+  <data name="AcctWinLoss" xml:space="preserve">
+    <value>Win/Loss:</value>
+  </data>
+  <data name="ParamCardNumber" xml:space="preserve">
+    <value>Card Number</value>
+  </data>
+  <data name="ParamPlayerName" xml:space="preserve">
+    <value>Player's Name</value>
+  </data>
+  <data name="ParamSlotMachine" xml:space="preserve">
+    <value>Slot Machine</value>
+  </data>
+  <data name="PreferenceAvgBet" xml:space="preserve">
+    <value>Avg. Bet</value>
+  </data>
+  <data name="PreferenceDrop" xml:space="preserve">
+    <value>Drop</value>
+  </data>
+  <data name="PreferenceDuration" xml:space="preserve">
+    <value>Duration (sec)</value>
+  </data>
+  <data name="PreferenceGame" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="PreferenceGameTypes" xml:space="preserve">
+    <value>Game Types</value>
+  </data>
+  <data name="PreferenceProvider" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="PreferenceVisits" xml:space="preserve">
+    <value>Visits</value>
+  </data>
+  <data name="PreferenceWinLoss" xml:space="preserve">
+    <value>Win/Loss</value>
+  </data>
+  <data name="ContactCURP" xml:space="preserve">
+    <value>CURP:</value>
+  </data>
+  <data name="ProfileDOB" xml:space="preserve">
+    <value>Date of Birth:</value>
+  </data>
+  <data name="ContactDocType" xml:space="preserve">
+    <value>Doc Type:</value>
+  </data>
+  <data name="ContctDocumentNo" xml:space="preserve">
+    <value>Document #:</value>
+  </data>
+  <data name="ProfileFistName" xml:space="preserve">
+    <value>First Name:</value>
+  </data>
+  <data name="ProfileGender" xml:space="preserve">
+    <value>Gender:</value>
+  </data>
+  <data name="ProfileLastName" xml:space="preserve">
+    <value>Last Name:</value>
+  </data>
+  <data name="ProfilePlayerNo" xml:space="preserve">
+    <value>Player's #:</value>
+  </data>
+  <data name="ProfilePlayerTitle" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="ContactRFC" xml:space="preserve">
+    <value>RFC:</value>
+  </data>
+  <data name="SubTitleCashdeskHistory" xml:space="preserve">
+    <value>Cashdesk History</value>
+  </data>
+  <data name="SubTitleCashlessCards" xml:space="preserve">
+    <value>Cashless Cards</value>
+  </data>
+  <data name="SubTitleContactInfo" xml:space="preserve">
+    <value>Contact Info &amp; Others</value>
+  </data>
+  <data name="SubTitleGameHistory" xml:space="preserve">
+    <value>Game History</value>
+  </data>
+  <data name="SubTitlePromoHistory" xml:space="preserve">
+    <value>Promo History</value>
+  </data>
+  <data name="TabPreferencesAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="TabPreferencesQuarter" xml:space="preserve">
+    <value>Last 3 Months</value>
+  </data>
+  <data name="TabPreferencesMonth" xml:space="preserve">
+    <value>Last Month</value>
+  </data>
+  <data name="TabPreferencesToday" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="AcctActive" xml:space="preserve">
+    <value>Active:</value>
+  </data>
+  <data name="AcctSlot" xml:space="preserve">
+    <value>Slot:</value>
+  </data>
+  <data name="MKLoyaltyConsumed" xml:space="preserve">
+    <value>Loyality Points Consumed:</value>
+  </data>
+  <data name="MKSegmentClassic" xml:space="preserve">
+    <value>Segment (Classic):</value>
+  </data>
+  <data name="MKSegmentRFM" xml:space="preserve">
+    <value>Segment (RFM):</value>
+  </data>
+  <data name="ActivityBuyIn" xml:space="preserve">
+    <value>Buy In:</value>
+  </data>
+  <data name="ActivityConsumption" xml:space="preserve">
+    <value>Promos Consumption:</value>
+  </data>
+  <data name="ActivityDrop" xml:space="preserve">
+    <value>Drop:</value>
+  </data>
+  <data name="ActivityNetWin" xml:space="preserve">
+    <value>Net Win:</value>
+  </data>
+  <data name="ActivityPromotion" xml:space="preserve">
+    <value>Promotion Granted:</value>
+  </data>
+  <data name="ActivitySessionTime" xml:space="preserve">
+    <value>Session Time:</value>
+  </data>
+  <data name="ActivityVisits" xml:space="preserve">
+    <value>Visits:</value>
+  </data>
+  <data name="CardIssueDate" xml:space="preserve">
+    <value>Date of Issue</value>
+  </data>
+  <data name="CardIssueMethod" xml:space="preserve">
+    <value>Issue Method</value>
+  </data>
+  <data name="CardNo" xml:space="preserve">
+    <value>Card #</value>
+  </data>
+  <data name="CardStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ContactAcctCreated" xml:space="preserve">
+    <value>Account Created on:</value>
+  </data>
+  <data name="ContactAddress" xml:space="preserve">
+    <value>Address:</value>
+  </data>
+  <data name="ContactCelluar" xml:space="preserve">
+    <value>Celluar #:</value>
+  </data>
+  <data name="ContactCity" xml:space="preserve">
+    <value>City:</value>
+  </data>
+  <data name="ContactCountry" xml:space="preserve">
+    <value>Country:</value>
+  </data>
+  <data name="ContactEmail" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="ContactLanguage" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="ContactMartial" xml:space="preserve">
+    <value>Martial Status:</value>
+  </data>
+  <data name="ContactNickName" xml:space="preserve">
+    <value>Nick Name:</value>
+  </data>
+  <data name="ContactOccupation" xml:space="preserve">
+    <value>Occupation:</value>
+  </data>
+  <data name="ContactPhone" xml:space="preserve">
+    <value>Phone #:</value>
+  </data>
+  <data name="ContactPostalCode" xml:space="preserve">
+    <value>Postal Code:</value>
+  </data>
+  <data name="GameHistoryAvgBet" xml:space="preserve">
+    <value>Avg Bet</value>
+  </data>
+  <data name="GameHistoryDrop" xml:space="preserve">
+    <value>Drop</value>
+  </data>
+  <data name="GameHistoryDuration" xml:space="preserve">
+    <value>Duration (Sec)</value>
+  </data>
+  <data name="GameHistoryGame" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="GameHistoryProvider" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="GameHistorySlot" xml:space="preserve">
+    <value>Slot #</value>
+  </data>
+  <data name="GameHistoryStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="GameHistoryWinLoss" xml:space="preserve">
+    <value>Win/Loss</value>
+  </data>
+  <data name="SubTitleMarketingInfo" xml:space="preserve">
+    <value>Marketing Info</value>
+  </data>
+  <data name="ContactAgent" xml:space="preserve">
+    <value>Agent:</value>
+  </data>
+  <data name="CashDeskAmountIn" xml:space="preserve">
+    <value>Amount In</value>
+  </data>
+  <data name="CashDeskAmountOut" xml:space="preserve">
+    <value>Amount Out</value>
+  </data>
+  <data name="CashDeskCardNumber" xml:space="preserve">
+    <value>Card No.</value>
+  </data>
+  <data name="CashDeskCashier" xml:space="preserve">
+    <value>Cashier Name</value>
+  </data>
+  <data name="CashDeskTicketNumber" xml:space="preserve">
+    <value>Ticket No.</value>
+  </data>
+  <data name="CashDeskTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="PromotionAmount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="PromotionAssignedTime" xml:space="preserve">
+    <value>Assigned Time</value>
+  </data>
+  <data name="PromotionCardNumber" xml:space="preserve">
+    <value>Paid Card No.</value>
+  </data>
+  <data name="PromotionName" xml:space="preserve">
+    <value>Promotion</value>
+  </data>
+  <data name="ParamInvalidCardNumber" xml:space="preserve">
+    <value>Please Enter a Valid Card Number!</value>
+  </data>
+  <data name="ParamInvalidSlotMachine" xml:space="preserve">
+    <value>Please Enter a Valid Slot Machine Number!</value>
+  </data>
+  <data name="ParamInvalid" xml:space="preserve">
+    <value>Please Enter One of Slot Machine Number, Player Name, or Player Card Number!</value>
+  </data>
+</root>

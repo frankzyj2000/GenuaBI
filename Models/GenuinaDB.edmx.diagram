@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="466786fec9d04104aae9c52db64283b4" Name="Authentication" ZoomLevel="75" >
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_AppMenuesTranslation" Width="2.5" PointX="7.125" PointY="7.5" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_AppMenuItemsTranslation" Width="2.5" PointX="7.125" PointY="4.25" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_Apps" Width="2.625" PointX="0.625" PointY="4.25" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_Languages" Width="2.5" PointX="10.125" PointY="4.625" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_Users" Width="2.5" PointX="10.125" PointY="0.75" />
+        <AssociationConnector Association="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_Languages" />
+        <AssociationConnector Association="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_Languages" />
+        <AssociationConnector Association="GENUINADB_Model.FK_CFG_Users_CFG_Languages" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_AppMenues" Width="2.625" PointX="3" PointY="7.25" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_AppMenuItems" Width="2.625" PointX="3.875" PointY="3.625" />
+        <AssociationConnector Association="GENUINADB_Model.FK_CFG_AppMenues_CFG_Apps" />
+        <AssociationConnector Association="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_AppMenues" />
+        <AssociationConnector Association="GENUINADB_Model.FK_CFG_AppMenuItems_CFG_AppMenues" />
+        <AssociationConnector Association="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_UserGroups" Width="2.375" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="GENUINADB_Model.CFG_AppMenuesAuthorizations" />
+        <AssociationConnector Association="GENUINADB_Model.CFG_AppMenuItemsAuthorizations" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_Casinos" Width="2.5" PointX="13.125" PointY="0.75" />
+        <EntityTypeShape EntityType="GENUINADB_Model.CFG_DashboardCharts" Width="2.5" PointX="13.125" PointY="6.5" />
+        <AssociationConnector Association="GENUINADB_Model.CFG_UsersInGroups" />
+        <EntityTypeShape EntityType="GENUINADB_Model.DBVersionGnSy" Width="2.25" PointX="6.625" PointY="0.875" />
+        <EntityTypeShape EntityType="GENUINADB_Model.GBI_CFG_DashboardCharts" Width="2.875" PointX="12.25" PointY="7.125" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

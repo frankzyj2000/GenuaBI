@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="All" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="AllRightReserved" xml:space="preserve">
+    <value>Todos los derechos reservados</value>
+  </data>
+  <data name="Asturia" xml:space="preserve">
+    <value>Asturia Technologies Inc.</value>
+  </data>
+  <data name="AutoRefresh" xml:space="preserve">
+    <value>Autorefrescar</value>
+  </data>
+  <data name="BtnCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="BtnChooseColumn" xml:space="preserve">
+    <value>Elegir Columnas</value>
+  </data>
+  <data name="BtnClose" xml:space="preserve">
+    <value>CERCA</value>
+  </data>
+  <data name="BtnContinue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="BtnExcel" xml:space="preserve">
+    <value>Excel</value>
+  </data>
+  <data name="BtnGenerate" xml:space="preserve">
+    <value>GENERAR</value>
+  </data>
+  <data name="BtnGo" xml:space="preserve">
+    <value>¡Ve!</value>
+  </data>
+  <data name="BtnLogout" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="BtnNo" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="BtnOK" xml:space="preserve">
+    <value>OKAY</value>
+  </data>
+  <data name="BtnPdf" xml:space="preserve">
+    <value>PDF</value>
+  </data>
+  <data name="BtnPrint" xml:space="preserve">
+    <value>Impresión</value>
+  </data>
+  <data name="BtnProfile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="BtnPrview" xml:space="preserve">
+    <value>Avance</value>
+  </data>
+  <data name="BtnSignOut" xml:space="preserve">
+    <value>Desconectar</value>
+  </data>
+  <data name="BtnYes" xml:space="preserve">
+    <value>SI</value>
+  </data>
+  <data name="CheckFreshTooltip" xml:space="preserve">
+    <value>Marque esta para actualizar la página de forma automática!</value>
+  </data>
+  <data name="ClickToContinue" xml:space="preserve">
+    <value>Clic aquí para continuar...</value>
+  </data>
+  <data name="ConfirmDefaultDate" xml:space="preserve">
+    <value>Habilitación de la función de actualización se restablecerá los parámetros de la fecha a la fecha actual.</value>
+  </data>
+  <data name="ConfirmDefaultDateRange" xml:space="preserve">
+    <value>Habilitación de la función de actualización se restablecerá los parámetros de la fecha a la fecha actual.</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Derechos de Autor</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Tablero de Instrumentos</value>
+  </data>
+  <data name="DataTableLanguage" xml:space="preserve">
+    <value>//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json</value>
+  </data>
+  <data name="DateRangeApply" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="DateRangeCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="DateRangeCustom" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="DateRangeFrom" xml:space="preserve">
+    <value>De</value>
+  </data>
+  <data name="DateRangeLanguage" xml:space="preserve">
+    <value>es</value>
+  </data>
+  <data name="DateRangeOutOfLimit" xml:space="preserve">
+    <value>Su fecha de Parámetro Rango ha estado fuera de rango Limitación del total de {0} días!</value>
+  </data>
+  <data name="DateRangeTo" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Casa</value>
+  </data>
+  <data name="MainNavigation" xml:space="preserve">
+    <value>NAVEGACION PRINCIPAL</value>
+  </data>
+  <data name="MemberSince" xml:space="preserve">
+    <value>Miembro Desde</value>
+  </data>
+  <data name="MenuAdd" xml:space="preserve">
+    <value>Añadir Elementos Eliminados</value>
+  </data>
+  <data name="MenuMoveLeft" xml:space="preserve">
+    <value>Mover a la Izquierda</value>
+  </data>
+  <data name="MenuMoveRight" xml:space="preserve">
+    <value>Mover a la Derecha</value>
+  </data>
+  <data name="MenuQuit" xml:space="preserve">
+    <value>Dejar</value>
+  </data>
+  <data name="MenuRemoveFromDashboard" xml:space="preserve">
+    <value>Eliminar de Dashboard</value>
+  </data>
+  <data name="MenuRestore" xml:space="preserve">
+    <value>Restaurar de Defecto</value>
+  </data>
+  <data name="MenuSave" xml:space="preserve">
+    <value>Guardar Todos los Cambios</value>
+  </data>
+  <data name="OFF" xml:space="preserve">
+    <value>APAGADO</value>
+  </data>
+  <data name="ON" xml:space="preserve">
+    <value>EN</value>
+  </data>
+  <data name="ParameterEmpty" xml:space="preserve">
+    <value>El valor no puede estar vacío</value>
+  </data>
+  <data name="ParameterGreaterZeroError" xml:space="preserve">
+    <value>El valor debe ser mayor que 0</value>
+  </data>
+  <data name="ParameterIntegerError" xml:space="preserve">
+    <value>El valor debe ser un número</value>
+  </data>
+  <data name="PleaseWaitLoadingText" xml:space="preserve">
+    <value>Espere mientras se carga la información ...</value>
+  </data>
+  <data name="QueryWaitingInfo" xml:space="preserve">
+    <value>Estamos procesando su consulta, por favor espere ......</value>
+  </data>
+  <data name="SelectDate" xml:space="preserve">
+    <value>Seleccionar Fecha</value>
+  </data>
+  <data name="SelectDateRange" xml:space="preserve">
+    <value>Seleccione Intervalo de Fechas</value>
+  </data>
+  <data name="SessionExpireChoice" xml:space="preserve">
+    <value>Haga Clic en "Continuar" para Seguir Trabajando o "Salir" Si ha Terminado.</value>
+  </data>
+  <data name="SessionExpired" xml:space="preserve">
+    <value>Sesión Expirada</value>
+  </data>
+  <data name="SessionExpireIn" xml:space="preserve">
+    <value>En Expirará</value>
+  </data>
+  <data name="SessionExpireInfo" xml:space="preserve">
+    <value>Su Sesión Expira En :</value>
+  </data>
+  <data name="SessionExpireTitle" xml:space="preserve">
+    <value>Tiempo de Espera de Sesión de Advertencia</value>
+  </data>
+  <data name="SessionMinute" xml:space="preserve">
+    <value>Minuto</value>
+  </data>
+  <data name="SessionSecond" xml:space="preserve">
+    <value>Segundo</value>
+  </data>
+  <data name="ToggleNavigation" xml:space="preserve">
+    <value>Navegación de palanca</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Totales :</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Atención</value>
+  </data>
+  <data name="SessionHour" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="DBVersionError" xml:space="preserve">
+    <value>GenuinaBI requiere mínimo Versión DB {0} mientras que la actual versión DB es {1} . Por favor, informe al administrador del sistema para actualizar DB!</value>
+  </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Moneda :</value>
+  </data>
+  <data name="ParameterYearError" xml:space="preserve">
+    <value>El año mínimo debe ser igual o mayor que {0} .</value>
+  </data>
+  <data name="BtnConfirm" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
+  <data name="LabelEnd" xml:space="preserve">
+    <value>Hasta :</value>
+  </data>
+  <data name="LabelFrom" xml:space="preserve">
+    <value>De</value>
+  </data>
+  <data name="LabelStart" xml:space="preserve">
+    <value>Desde :</value>
+  </data>
+  <data name="LabelTo" xml:space="preserve">
+    <value>a</value>
+  </data>
+</root>

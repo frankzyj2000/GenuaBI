@@ -1,0 +1,336 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Dashboard
+@using GenuinaBI.Resources.Shared
+@using GenuinaBI.Configuration
+@using GenuinaBI.Extensions
+@using System.Security.Claims;
+@model UIChartModel
+@{
+    // EXAMPLE:
+    // Using the ViewBag on a page to set the title and sub-title
+    // This will cause the _GenuinaBILayout to include this value in the page title
+    // And also set the top titles in the main content area of the page
+    ViewBag.Title = OperationSummary.Title;
+    var routeValues = this.ViewContext.RouteData.Values;
+    var currentLang = routeValues["lang"] as string;
+    // EXAMPLE:
+    // Using the Breadcrumb class to create a dynamically generated breadcrumb on the page with
+    // Titles, plus optional icon and URLs
+    ViewBag.Breadcrumb = new Breadcrumb(new Crumb[] {
+        new Crumb(PageResources.Home, Url.Action("Index", "Dashboard", new { lang = @currentLang }), "fa-dashboard"),
+        new Crumb(PageResources.Dashboard, "", "fa-dashboard"),
+        new Crumb(PageResources.OperationSummary, "", "active")
+    });
+    var dateParameter = "";
+    var dateParameterStart = "";
+    var dateParameterEnd = "";
+    var pageLength = 10;
+    if (Model.QueryParameter != null)
+    {
+        dateParameterStart = ((OperationSummaryParameters)Model.QueryParameter).Start;
+        dateParameterEnd = ((OperationSummaryParameters)Model.QueryParameter).End;
+        pageLength = ((OperationSummaryParameters)Model.QueryParameter).PageLength;
+        dateParameter = dateParameterStart + " - " + dateParameterEnd;
+    }
+    var user = User.Identity as ClaimsIdentity;
+}
+@section styles {
+    @Styles.Render("~/Content/datatables_css")
+    @Styles.Render("~/Content/daterangepicker_css")
+    @Styles.Render("~/Content/icheck_css")
+    @Styles.Render("~/Content/simon_css")
+}
+                <div id="warningToDefaultDateRange" class="modal modal-warning fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">@GeneralResources.Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>@GeneralResources.ConfirmDefaultDateRange</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnDefaultDateYes" type="button" class="btn btn-outline pull-left" data-value="1">@GeneralResources.BtnYes</button>
+                                <button id="btnDefaultDateNo" type="button" class="btn btn-outline" data-dismiss="modal" data-value="0">@GeneralResources.BtnNo</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <form id="gbiForm">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-8 col-sm-12">
+                            <div class="box box-info">
+                                <div class="box-body">
+                                @if (Config.RefreshTimeOut > 0) {
+                                    <div class="row">    
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="control-label">@GeneralResources.SelectDateRange </label>
+                                            <div class="input-group input-group-sm">
+                                                <span id="btDateRange" class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" name="daterange" class="form-control input-sm" value="@dateParameter">
+                                                <input type="hidden" name="queryParam[start]" value="@dateParameterStart">
+                                                <input type="hidden" name="queryParam[end]" value="@dateParameterEnd">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <label class="control-label" id="labelAutoRefresh" title="@GeneralResources.CheckFreshTooltip">
+                                                @GeneralResources.AutoRefresh
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn">
+                                                    <div id="buttonAutoRefresh" class="toggle toggle-light"></div>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else {
+                                    <div class="row">
+                                        <div class="col-sm-8 col-xs-12">
+                                            <label class="control-label">@GeneralResources.SelectDateRange </label>
+                                            <div class="input-group input-group-sm">
+                                                <span id="btDateRange" class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" name="daterange" class="form-control input-sm" value="@dateParameter">
+                                                <input type="hidden" name="queryParam[start]" value="@dateParameterStart">
+                                                <input type="hidden" name="queryParam[end]" value="@dateParameterEnd">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-12">
+                                            <label class="control-label" >&nbsp;</label>
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                        @{
+                            List<InfoListItem> items = new List<InfoListItem>();
+                            items.Add(new InfoListItem("TotalMoneyIn", OperationSummary.WinSlot_TotalMoneyIn, "", ""));
+                            items.Add(new InfoListItem("TotalMoneyOut", OperationSummary.WinSlot_TotalMoneyOut, "", ""));
+                            items.Add(new InfoListItem("HandPayments", OperationSummary.WinSlot_HandPayment, OperationSummary.WinSlot_HandPaymentsTooltip, ""));
+
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxWinSlots", "WinSlots", "Win Slots", OperationSummary.WinSlotTooltip, "ion-social-usd-outline", "bg-green", "col-sm-4 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowInfoListBox", Model); 
+
+                            items.Clear();
+                            items.Add(new InfoListItem("PlayerCashIn", OperationSummary.PlayerCashIn, OperationSummary.PlayerCashInTooltip, ""));
+                            items.Add(new InfoListItem("Empty", "", "", ""));
+                            items.Add(new InfoListItem("PlayerCashOut", OperationSummary.PlayerCashOut, OperationSummary.PlayerCashOutTooltip, ""));                
+
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxPlayerAccountAmount", "PlayerAccountAmount", OperationSummary.PlayerAccountBalance, "", "ion-social-usd-outline", "bg-blue", "col-sm-4 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowInfoListBox", Model); 
+
+                            items.Clear();
+                            items.Add(new InfoListItem("NetWinCashIn", OperationSummary.NetWinCashIn, "", ""));
+                            items.Add(new InfoListItem("NetWinCashOut", OperationSummary.NetWinCashOut, "", ""));
+                            items.Add(new InfoListItem("Taxes", OperationSummary.NetWin_TaxReservation, OperationSummary.NetWin_TaxReservationTooltip, ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxNetWinAfterTax", "NetWinAfterTax", OperationSummary.NetWinAfterTax, OperationSummary.NetWinAfterTaxTooltip, "ion-social-usd-outline", "bg-yellow","col-sm-4 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowInfoListBox", Model); 
+
+                            items.Clear();
+                            List<DonutChartLegend> legends = new List<DonutChartLegend>();
+                            legends.Add(new DonutChartLegend(OperationSummary.PromotionCancelled, "text-gray", "DataCancelled"));
+                            legends.Add(new DonutChartLegend(OperationSummary.PromotionConsumed, "text-aqua", "DataConsumed"));
+                    
+                            //items.Add(new InfoListItem("SpecialPromos", OperationSummary.PromotionSpecial, OperationSummary.PromotionSpecialTooltip, ""));
+                            items.Add(new InfoListItem("GrantedPromos", OperationSummary.PromotionGranted, OperationSummary.PromotionGrantedTooltip, ""));
+                            items.Add(new InfoListItem("CancelledPromos", OperationSummary.PromotionCancelledExpired, "", ""));
+                            items.Add(new InfoListItem("OverShortPromos", OperationSummary.PromotionOverAndShort, OperationSummary.PromotionOverShortTooltip, ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxConsumeredPromos", "ConsumeredPromos", OperationSummary.PromotionConsumedOnSlot, "", "ion-social-usd-outline", "bg-aqua", "col-sm-6 col-xs-12", "promotionDonutChart", legends);
+                            Html.RenderPartial("../Shared/ShowInfoListBoxWithDonut", Model); 
+
+                            items.Clear();
+                            legends.Clear();
+                            legends.Add(new DonutChartLegend(OperationSummary.SlotEmpty, "text-gray","DataSlotEmpty"));
+                            legends.Add(new DonutChartLegend(OperationSummary.SlotOccupied, "text-green","DataSlotOccupied"));
+
+                            items.Add(new InfoListItem("TotalSessions", OperationSummary.SlotOccupationSessions, "", ""));
+                            items.Add(new InfoListItem("TotalPlayers", OperationSummary.SlotOccupationTotalPlayers, "", ""));
+                            items.Add(new InfoListItem("TotalSlotOccupied", OperationSummary.SlotOccupationTotalOccupied, "", ""));
+                            items.Add(new InfoListItem("TotalSlots", OperationSummary.SlotOccupationTotalSlots, "", ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxSlotOccupationRate", "SlotOccupationRate", OperationSummary.SlotOccupationRate, OperationSummary.SlotOccupationRateTooltip, "ion-pie-graph", "bg-green","col-sm-6 col-xs-12", "occupationDonutChart", legends);
+                            Html.RenderPartial("../Shared/ShowInfoListBoxWithDonut", Model); 
+
+                            List<ChartLegend> list = new List<ChartLegend>();
+                            list.Add(new ChartLegend("rgba(0,166,18,0.5)", OperationSummary.WinSlots));
+                            list.Add(new ChartLegend("rgba(243,156,18,0.5)", OperationSummary.NetWinAfterTax));
+                            Model.InfoBox = new InfoBoxModel("OperationSummaryTrend1WeekChart", OperationSummary.TrendsIn7Days, "chartTrend1Week", "col-sm-6 col-xs-12", list);
+                            Html.RenderPartial("../Shared/ShowChartLengendBox", Model); 
+
+                            list.Clear();
+                            list.Add(new ChartLegend("rgba(0,166,18,0.5)", OperationSummary.WinSlots));
+                            list.Add(new ChartLegend("rgba(243,156,18,0.5)", OperationSummary.NetWinAfterTax));
+                            Model.InfoBox = new InfoBoxModel("OperationSummaryTrend7WeekChart", OperationSummary.TrendsIn7Weeks, "chartTrend7Week", "col-sm-6 col-xs-12", list);
+                            Html.RenderPartial("../Shared/ShowChartLengendBox", Model); }
+                    <div id="boxProviderList" class="box-container col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 id="providerlist_title" class="box-title">@OperationSummary.ProviderStatsTitle</h3>
+                                @{ Model.InfoBox = new InfoBoxModel("ProviderTable"); }
+                                <div class="box-tools pull-right">
+                                    @{Html.RenderPartial("../Shared/ShowBoxControlButtons", Model);}
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="providerlist" class="table table-bordered table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>@OperationSummary.Provider</th>
+                                            <th>@OperationSummary.ProviderTableMoneyIn</th>
+                                            <th>@OperationSummary.ProviderTableMoneyOut</th>
+                                            <th>@OperationSummary.ProviderTableHandPayments</th>
+                                            <th>@OperationSummary.ProviderTableDPromotion</th>
+                                            <th>@OperationSummary.ProviderTableNetWin</th>
+                                            <th>@OperationSummary.ProviderTableWin</th>
+                                            <th>@OperationSummary.ProviderTablePlayers</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>@GeneralResources.Total</th>
+                                            <th id="totalMoneyIn"></th>
+                                            <th id="totalMoneyOut"></th>
+                                            <th id="totalHandPayments"></th>
+                                            <th id="totalDPromotion"></th>
+                                            <th id="totalNetWin"></th>
+                                            <th id="totalWin"></th>
+                                            <th id="totalCantPlayer"></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <section class="resouceLabels"
+                    data-start="@GeneralResources.LabelStart"
+                    data-end="@GeneralResources.LabelEnd"
+                    data-btnrefreshtooltip="@OperationSummary.BtnRefreshTooltip"
+                    data-btnrefreshdisabledtooltip="@OperationSummary.BtnRefreshDisabledTooltip"
+                    data-slot-occupied="@OperationSummary.SlotOccupied"
+                    data-slot-empty="@OperationSummary.SlotEmpty"
+                    data-promotioncancelled="@OperationSummary.PromotionCancelled"
+                    data-promotionconsumed="@OperationSummary.PromotionConsumed"
+                    data-datatablelanguage="@GeneralResources.DataTableLanguage"
+                    data-casinostarttime="@Config.CasinoStartTime"
+                    data-casinoendtime="@Config.CasinoEndTime"
+                    data-refreshtimeout="@Config.RefreshTimeOut"
+                    data-timeformat="@Config.CasinoTimeFormat"
+                    data-dateformat="@Config.CasinoDateFormat"
+                    data-currencythousand="@Config.CasinoCurrencyThousand"
+                    data-currencysymbol="@Config.CasinoCurrencySymbol"
+                    data-currencydecimal="@Config.CasinoCurrencyDecimal"
+                    data-currencyprecision="@Config.CasinoCurrencyPrecision"
+                    data-logclienterror="@Config.LogClientError"
+                    data-defaultstartdate="@Model.DefaultStartDate"
+                    data-defaultenddate="@Model.DefaultEndDate"
+                    data-pagelength="@pageLength"
+                    data-servercache="@Config.OperationSummaryServerCache"
+                    data-daterangelimit="@Config.OperationSummaryDateRangeLimit"
+                    data-sessiontimeout="@Config.SessionTimeOut"
+                    data-warningbeforesessiontimeout="@Config.WarningBeforeSessionTimeOut"
+                    data-sessionexpired="@GeneralResources.SessionExpired"
+                    data-sessionexpirein="@GeneralResources.SessionExpireIn"
+                    data-sessionhour="@GeneralResources.SessionHour"
+                    data-sessionsecond="@GeneralResources.SessionSecond"
+                    data-sessionminute="@GeneralResources.SessionMinute"
+                    data-buttonyes="@GeneralResources.BtnYes"
+                    data-buttonno="@GeneralResources.BtnNo"
+                    data-menuquit="@GeneralResources.MenuQuit"
+                    data-menuadd="@GeneralResources.MenuAdd"
+                    data-menurestore="@GeneralResources.MenuRestore"
+                    data-menusave="@GeneralResources.MenuSave"
+                    data-confirmdefaultdate="@GeneralResources.ConfirmDefaultDate"
+                    data-all="@GeneralResources.All"
+                    data-querywaitinginfo="@GeneralResources.QueryWaitingInfo"
+                    data-dateranglimiterror="@GeneralResources.DateRangeOutOfLimit"
+                    data-btnchoosecolumn="@GeneralResources.BtnChooseColumn"
+                    data-btnexcel="@GeneralResources.BtnExcel"
+                    data-btnpdf="@GeneralResources.BtnPdf"
+                    data-btnprint="@GeneralResources.BtnPrint"
+                    data-daterangecustom="@GeneralResources.DateRangeCustom"
+                    data-daterangefrom="@GeneralResources.DateRangeFrom"
+                    data-daterangeto="@GeneralResources.DateRangeTo"
+                    data-daterangeoutoflimit="@GeneralResources.DateRangeOutOfLimit"
+                    data-daterangelanguage="@GeneralResources.DateRangeLanguage"
+                    data-daterangeapply="@GeneralResources.DateRangeApply"
+                    data-daterangecancel="@GeneralResources.DateRangeCancel"
+                    data-daterangeerror="@GeneralResources.DateRangeError"
+                    data-parameteryearerror="@GeneralResources.ParameterYearError"
+                    data-minimumparameteryear="@Config.MinimumParameterYear"
+                    data-columnprovider="@OperationSummary.Provider"
+                    data-columnmoneyin="@OperationSummary.ProviderTableMoneyIn"
+                    data-columnmoneyout="@OperationSummary.ProviderTableMoneyOut"
+                    data-columnhandpayments="@OperationSummary.ProviderTableHandPayments"
+                    data-columndpromotion="@OperationSummary.ProviderTableDPromotion"
+                    data-columnnetwin="@OperationSummary.ProviderTableNetWin"
+                    data-columnwin="@OperationSummary.ProviderTableWin"
+                    data-columnplayers="@OperationSummary.ProviderTablePlayers"
+                    data-reportname="@Constants.ReportName.OperationSummary"
+                    data-titlewinslots="@OperationSummary.WinSlots"
+                    data-titleplayeraccount="@OperationSummary.PlayerAccountBalance"
+                    data-titlenetwinaftertax="@OperationSummary.NetWinAfterTax"
+                    data-titlepromotion="@OperationSummary.PromotionConsumedOnSlot"
+                    data-titleslotoccupation="@OperationSummary.SlotOccupationRate"
+                    data-titletrends7days="@OperationSummary.TrendsIn7Days"
+                    data-titletrends7weeks="@OperationSummary.TrendsIn7Weeks"
+                    data-title="@OperationSummary.Title"
+                    data-numtotalmoneyin="@OperationSummary.WinSlot_TotalMoneyIn"
+                    data-numtotalmoneyout="@OperationSummary.WinSlot_TotalMoneyOut"
+                    data-numhandpayment="@OperationSummary.WinSlot_HandPayment"
+                    data-numplayercashin ="@OperationSummary.PlayerCashIn"
+                    data-numplayercashout ="@OperationSummary.PlayerCashOut"
+                    data-numnetwincashin ="@OperationSummary.NetWinCashIn"
+                    data-numnetwincashout ="@OperationSummary.NetWinCashOut"
+                    data-numtaxreservation="@OperationSummary.NetWin_TaxReservation"
+                    data-numpromotioncancelled="@OperationSummary.PromotionCancelledExpired"
+                    data-numpromotiongranted="@OperationSummary.PromotionGranted"
+                    data-numpromotionovershot="@OperationSummary.PromotionOverAndShort"
+                    data-numsessions="@OperationSummary.SlotOccupationSessions"
+                    data-numtotalplayers="@OperationSummary.SlotOccupationTotalPlayers"
+                    data-numtotaloccupied="@OperationSummary.SlotOccupationTotalOccupied"
+                    data-numtotalslots="@OperationSummary.SlotOccupationTotalSlots"
+                    data-username="@user.Name"
+                    data-total="@GeneralResources.Total"></section>
+@section scripts {
+    <!-- page script -->
+    @*NOTE: These do contains useful snippets on how to setup charts*@
+    <!-- DataTables for jQuery -->
+    @Scripts.Render("~/bundles/datatable")
+    @*NOTE: These contains useful snippets on how to setup charts*@
+    <!-- ChartJS 1.0.2 -->
+    @Scripts.Render("~/bundles/chartjs")
+    <!-- Date Range Picker -->
+    @Scripts.Render("~/bundles/daterangepicker")
+    @Scripts.Render("~/bundles/icheck")
+    @Scripts.Render("~/bundles/simon")
+    @Scripts.Render("~/bundles/accounting")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="@StaticFile.Version("/Scripts/pages/operationSummary.js")"></script>
+}

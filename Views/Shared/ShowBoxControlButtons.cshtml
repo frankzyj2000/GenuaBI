@@ -1,0 +1,7 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Shared
+@model UIChartModel
+                                    <button type="button" class="btn btn-box-tool @if (Model.IsControlButtonDark) {<text>dark</text>}" data-widget="collapse">
+    <i class="fa fa-minus"></i>
+</button>
+                                    @{Html.RenderPartial("ShowBoxAddRemoveControlButtons", Model);}

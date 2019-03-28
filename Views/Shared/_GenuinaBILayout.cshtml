@@ -1,0 +1,99 @@
+﻿@using GenuinaBI.Resources.Shared
+@using GenuinaBI.Models
+@using GenuinaBI.Extensions
+@using System.Security.Claims;
+@{
+    var user = User.Identity as ClaimsIdentity;
+
+    System.Reflection.Assembly assembly = typeof(GenuinaBI.MvcApplication).Assembly;
+    System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+    string version = fvi.FileVersion;
+    /*
+     * This is the main layout that creates the GenuinaBI look and feel
+     * It includes all of the relevant CSS and Js in this project and across CDNs around the web for optimal load times
+     */
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!--Source Sans Pro from Google Fonts-->
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet" />
+    <!--Bootstrap CSS-->
+    @Styles.Render("~/Content/css")
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Page specific styles -->@RenderSection("styles", required: false)    <!-- Theme and Skin styles -->
+    @Styles.Render("~/Content/app_css")
+    @Styles.Render("~/Content/toastr_css")
+    @Styles.Render("~/Content/contextMenu_css")
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="compact sidebar-collapse">
+    <div class="wrapper">
+        @{Html.RenderPartial("_GenuinaBITopMenu");}
+        <!-- Left side column. contains the logo and sidebar -->
+        @{Html.RenderPartial("_GenuinaBILeftMenu");}
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>@ViewBag.Title<small>@ViewBag.TitleSmall</small></h1>
+                @{Html.RenderPartial("_GenuinaBIBreadcrumb");}
+            </section>
+            <!-- Main content -->
+            <section id="gbiContent" class="content">
+                <div id="sm-countdown-dialog" class="modal modal-warning fade modal-narrow" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">@GeneralResources.SessionExpireTitle</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>@GeneralResources.SessionExpireInfo <span id="sm-countdowntimer" style="font-weight: bold; font-size: 120%"></span>
+                                <p>@GeneralResources.SessionExpireChoice</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnContinue" type="button" class="btn btn-outline pull-left" data-value="1">@GeneralResources.BtnContinue</button>
+                                <button id="btnLogout" type="button" class="btn btn-outline" data-dismiss="modal" data-value="0">@GeneralResources.BtnLogout</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                </div>
+                @RenderBody()
+            </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>@GeneralResources.Version</b> @version
+            </div>
+            <strong>@GeneralResources.Copyright &copy; 2015 <a href="http://asturiatechnologies.com/">@GeneralResources.Asturia</a></strong> @GeneralResources.AllRightReserved.
+        </footer>
+        @if (@user.IsAdmin() == true)
+        {
+            Html.RenderPartial("_GenuinaBISideBar");
+        }
+    </div><!-- ./wrapper -->
+    @* Bundles assume jquery 2.1.4 and Bootstrap 3 *@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/slimscroll")
+    @*@Scripts.Render("~/bundles/fastclick") // remove this one to resolve safari issue for daterangepicker*@
+    @*@Scripts.Render("~/bundles/contextMenu")*@
+    <script src="@StaticFile.Version("~/Scripts/gbService.js")"></script>
+    <script src="@StaticFile.Version("~/Scripts/app.js")"></script>
+    @RenderSection("scripts", required: true)
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿@using GenuinaBI.Models
+@model UIChartModel
+                    <div id="@Model.InfoListBox.BoxIdName" class="box-container @Model.InfoListBox.ColumnAttribute">
+                        <div class="box infolist-box box-solid">
+                            <div class="infolist-box-header with-border @Model.InfoListBox.BgColor">
+                                <span class="infolist-box-title"><i class="@Model.InfoListBox.Icon"></i></span>
+                                <span id="@Model.InfoListBox.IdName" title="@Model.InfoListBox.HeadSmall" class="infolist-box-title"></span><br />
+                                <span class="infolist-box-smalltitle">@Model.InfoListBox.Head</span>
+                                <div class="infolist-box-tools pull-right">
+                                    @{Html.RenderPartial("ShowBoxAddRemoveControlButtons", Model);}
+                                </div>
+                            </div>
+                        </div>
+                    </div>

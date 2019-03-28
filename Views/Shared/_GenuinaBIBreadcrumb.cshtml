@@ -1,0 +1,24 @@
+﻿@if (ViewBag.Breadcrumb != null) {
+    /* This breadcrumb partial isto be dropped into the top of the main content page
+       and uses the AdminLte.Breadcrumb class to dynamically build the breadcrumb per page*/
+    @Html.Raw("                <ol class=\"breadcrumb\">\n");
+    foreach (Crumb crumb in ViewBag.Breadcrumb) {
+        if (crumb.HasLink && crumb.HasIcon)
+        {
+<text>                    <li><a href="@crumb.Link"><i class="fa @crumb.Icon"></i><span>@crumb.Text</span></a></li></text>
+        }
+        if (crumb.HasLink && !crumb.HasIcon)
+        {
+<text>                    <li><a href="@crumb.Link"><span>@crumb.Text</span></a></li></text>
+        }
+        if (!crumb.HasLink && crumb.HasIcon)
+        {
+<text>                    <li><i class="fa @crumb.Icon"></i><span>@crumb.Text</span></li></text>
+        }
+        if (!crumb.HasLink && !crumb.HasIcon)
+        {
+<text>                    <li><span>@crumb.Text</span></li></text>
+        }
+    }
+    @Html.Raw("                </ol>");
+}

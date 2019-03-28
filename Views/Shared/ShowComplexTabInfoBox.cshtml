@@ -1,0 +1,170 @@
+﻿@using GenuinaBI.Models
+@model UIChartModel
+                    <div id="@Model.InfoListTabBox.BoxIdName" class="box-container @Model.InfoListTabBox.ColumnAttribute">
+                        <div class="box box-primary">
+                            <div class="box-header with-border @Model.InfoListTabBox.BgColor">
+                                <h3 class="box-title">@Model.InfoListTabBox.Head</h3>
+                                <div class="box-tools pull-right">
+                                    @{
+                                        Model.IsControlButtonDark = false; //control button disiplayed with normal color
+                                        Html.RenderPartial("ShowBoxControlButtons", Model);}
+                                </div>
+                            </div>
+                             <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                                        @{
+                                            int idx = 0;
+                                            foreach (InfoListTab tab in Model.InfoListTabBox.TabList)
+                                            {
+                                        <text><li @if (@idx == 0) {<text> class="active" </text>}>
+                                            <a href="#@tab.TabId" data-toggle="tab">@tab.TabTitle</a>
+                                        </li></text>
+                                                idx++;
+                                            }
+                                        }    
+                                    </ul>
+                                    <div class="tab-content no-padding">
+                                        @{
+                                            idx = 0;
+                                            foreach (InfoListTab tab in Model.InfoListTabBox.TabList)
+                                            {                                             
+                                        <div class="@if (@idx == 0) {<text>tab-pane active</text>} else {<text>tab-pane</text>}" id="@tab.TabId">
+                                                @if (tab.ContentType != "table")
+                                                {
+                                                    int idxj = 0;
+                                                    int column = 1;
+                                                    int length = tab.Content.Count;
+                                                    int maxline = (int) Math.Ceiling((double)length/3); //show 3 columns
+                                            <div class="row">
+                                                <div class="col-md-4 col-xs-12">
+                                                    <ul class="nav nav-stacked">
+                                                    @foreach (InfoListItem item in tab.Content)
+                                                    {    
+                                                        <li class="compact">
+                                                            <a href="#">
+                                                        @if (item.Name == "Empty")
+                                                        {   
+                                                            <text>&nbsp;</text>
+                                                        }   
+                                                        else
+                                                        {   
+                                                            <text>@item.Title</text>
+                                                        }   
+                                                                <span class="pull-right badge bg-blue" id="@item.Name" title="@item.SmallTitle">@item.Content</span>
+                                                            </a>
+                                                        </li>
+                                                        idxj++;
+                                                        if (idxj >= (maxline * column))   //display new column
+                                                        {
+                                                            break;   
+                                                        }
+                                                    }                                                         
+                                                    </ul>    
+                                                </div>
+                                                    @if (length > (maxline * column)) {
+                                                <text><div class="col-md-4 col-xs-12">
+                                                    <ul class="nav nav-stacked"></text>
+                                                        idxj = 0;
+                                                        foreach (InfoListItem item in tab.Content)
+                                                        {
+                                                            if (idxj >= maxline * column)
+                                                            {
+                                                        <li class="compact">
+                                                            <a href="#">
+                                                                @if (item.Name == "Empty")
+                                                                {
+                                                                    <text>&nbsp;</text>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <text>@item.Title</text>
+                                                                }
+                                                                <span class="pull-right badge bg-blue" id="@item.Name" title="@item.SmallTitle">@item.Content</span>
+                                                            </a>
+                                                        </li> 
+                                                            }
+                                                            idxj++;
+                                                            if (idxj >= (maxline * (column+1) ))   //display new column
+                                                            {
+                                                                break;
+                                                            }                                                           
+                                                        }
+                                    @:                </ul>
+                                    @:            </div>
+                                                    }        
+                                                    @if (length > (maxline * (column + 1))) {
+                                                <text><div class="col-md-4 col-xs-12">
+                                                    <ul class="nav nav-stacked"></text>
+                                                        idxj = 0;
+                                                        foreach (InfoListItem item in tab.Content)
+                                                        {
+                                                            if (idxj >= maxline * (column+1))
+                                                            {
+                                                        <li class="compact">
+                                                            <a href="#">
+                                                                @if (item.Name == "Empty")
+                                                                {
+                                                                    <text>&nbsp;</text>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <text>@item.Title</text>
+                                                                }
+                                                                <span class="pull-right badge bg-blue" id="@item.Name" title="@item.SmallTitle">@item.Content</span>
+                                                            </a>
+                                                        </li>                                                                
+                                                            }
+                                                            idxj++;                                                        
+                                                        }
+                                    @:                </ul>
+                                    @:            </div>
+                                                    }                                                                                                                                                       
+                                            </div>                                                 
+                                                }
+                                                else /*display table*/
+                                                {
+                                            <text><table id="@tab.TableId" class="table table-bordered table-striped" style="width:100%;">
+                                                <thead>
+                                                    <tr>
+                                                    @foreach (InfoListItem item in tab.Content)
+                                                    {
+                                                        if (item.SmallTitle != "")
+                                                        {
+                                                        <text><th class="@item.SmallTitle">@item.Title</th></text>
+                                                        }
+                                                        else
+                                                        {
+                                                        <text><th>@item.Title</th></text>
+                                                        }
+                                                    }
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                    @foreach (InfoListItem item in tab.Content)
+                                                    {
+                                                        if (item.SmallTitle != "")
+                                                        {
+                                                        <text><th class="@item.SmallTitle">@item.Title</th></text>
+                                                        }
+                                                        else
+                                                        {
+                                                        <text><th>@item.Title</th></text>
+                                                        }
+                                                    }
+                                                    </tr>
+                                                </tfoot>
+                                            </table></text>
+                                                }
+                                        </div>
+                                                idx++;
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                    </div>

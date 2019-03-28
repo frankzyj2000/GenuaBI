@@ -1,0 +1,32 @@
+﻿@using GenuinaBI.Models
+@model DashboardChartModel
+                     <div id="@Model.InfoBox.Name" class="box-container @Model.InfoBox.ColumnAttribute">
+                         <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">@Model.InfoBox.Title</h3>
+                                <div class="box-tools pull-right">
+                                    @{Html.RenderPartial("ShowBoxControlButtons", Model);}
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="chart">
+                                @if (@Model.InfoBox.ChartLegendList != null && @Model.InfoBox.ChartLegendList.Count > 0)
+                                {
+                                    <div class="barchart-legend pull-right">
+                                        <ul>
+                                    @foreach (ChartLegend legend in @Model.InfoBox.ChartLegendList)
+                                    {
+                                        <text>
+                                            <li><span style="background-color:@legend.BgColor"></span>@legend.Title</li>
+                                        </text>
+                                    }
+                                        </ul>
+                                    </div>
+                                }
+                                    <canvas id="@Model.InfoBox.Content" style="height:250px"></canvas>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                         </div>
+                         <!-- /.box-primary -->
+                     </div>

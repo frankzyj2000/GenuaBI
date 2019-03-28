@@ -1,0 +1,110 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Account
+@model LocalAccountLoginViewModel
+@{
+    /* This partial controls the left menu of the GenuinaBI and is called automatically by _GenuinaBILayout
+    This is where you can add, modify, or remove navigation options in your app*/
+    Layout = null;
+    if (!Request["lang"].IsEmpty())
+    {
+        Culture = UICulture = Request["lang"];
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GenuinaBI | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="/Content/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/Content/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/Scripts/plugins/iCheck/square/blue.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/"><b>Genuina</b>BI </a> @*<p style="font-size:10px">ver @typeof(GenuinaBI.MvcApplication).Assembly.GetName().Version</p>*@
+</div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">            
+            @if (Model != null && Model.ErrorMsg != null)
+            {
+                <p class="login-box-msg" style="color:red;">@Model.ErrorMsg</p>
+            }
+            else
+            {
+                <p class="login-box-msg">@LoginResources.PleaseSignIn</p>
+            }
+            @using (Html.BeginForm("NewLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group has-feedback">
+                    <div>
+                        @Html.ValidationMessageFor(m => m.UserId)
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(m => m.UserId, new
+                            {
+                                @class = "form-control",
+                                @id = "inputUsername",
+                                @placeholder = LoginResources.UserId
+                            }
+                        )
+                    </div>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <div>
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "inputPassword", @placeholder = LoginResources.Password })
+                    </div>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label for="inputRememberMe" class="control-label">@LoginResources.RememberMe</label>
+                            <div>
+                                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "", @id = "inputRememberMe" })
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" id="btnSignIn" class="btn btn-primary btn-block btn-flat">@LoginResources.SignIn</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            }
+            @*<a href="/GenuinaBI/Register" class="text-center">@LoginResources.RegisterNew</a>*@
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery 2.1.4 -->
+    <script src="/Scripts/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="/Scripts/plugins/iCheck/icheck.min.js"></script>
+    <script src="/Scripts/pages/newLogin.js"></script>
+</body>
+</html>

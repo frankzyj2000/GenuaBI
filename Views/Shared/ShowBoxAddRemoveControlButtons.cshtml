@@ -1,0 +1,16 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Shared
+@model UIChartModel
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-box-tool @if (Model.IsControlButtonDark) {<text>dark</text>} dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-wrench"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-cut"></i> @GeneralResources.MenuRemoveFromDashboard</button></li>
+                                            <li><button type="button" class="btn btn-box-tool" data-widget="moveleft"><i class="fa fa-arrow-left"></i> @GeneralResources.MenuMoveLeft</button></li>
+                                            <li><button type="button" class="btn btn-box-tool" data-widget="moveright"><i class="fa fa-arrow-right"></i> @GeneralResources.MenuMoveRight</button></li>
+                                            <li><button type="button" class="btn btn-box-tool" data-widget="add"><i class="fa fa-sign-in"></i> @GeneralResources.MenuAdd</button></li>
+                                            @*<li><button type="button" class="btn btn-box-tool" data-widget="restore"><i class="fa fa-undo"></i> @GeneralResources.MenuRestore</button></li>
+                                            <li><button type="button" class="btn btn-box-tool" data-widget="save"><i class="fa fa-save"></i> @GeneralResources.MenuSave</button></li>*@
+                                        </ul>
+                                    </div>

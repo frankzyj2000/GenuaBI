@@ -1,0 +1,258 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Dashboard
+@using GenuinaBI.Resources.Shared
+@using GenuinaBI.Configuration
+@using GenuinaBI.Extensions
+@using System.Security.Claims;
+@model UIChartModel
+@{
+    // EXAMPLE:
+    // Using the ViewBag on a page to set the title and sub-title
+    // This will cause the _GenuinaBILayout to include this value in the page title
+    // And also set the top titles in the main content area of the page
+    ViewBag.Title = TopPlayers.Title;
+    var routeValues = this.ViewContext.RouteData.Values;
+    var currentLang = routeValues["lang"] as string;    // EXAMPLE:
+    // Using the Breadcrumb class to create a dynamically generated breadcrumb on the page with
+    // Titles, plus optional icon and URLs
+    ViewBag.Breadcrumb = new Breadcrumb(new Crumb[] {
+        new Crumb(PageResources.Home, Url.Action("Index", "Dashboard", new { lang = @currentLang }), "fa-dashboard"),
+        new Crumb(PageResources.Dashboard, "", "fa-dashboard"),
+        new Crumb(PageResources.TopPlayers, "", "active")
+    });
+    var dateParameter = "";
+    var dateParameterStart = "";
+    var dateParameterEnd = "";
+    var numberOfPlayers = 10;
+    var numberOfVisits = 10;
+    var pageLength = 10;
+    var maxPlayers = 200;
+    var maxVisits = 200;
+    if (Model.QueryParameter != null)
+    {
+        dateParameterStart = ((TopPlayerParameters)Model.QueryParameter).Start;
+        dateParameterEnd = ((TopPlayerParameters)Model.QueryParameter).End;
+        dateParameter = dateParameterStart + " - " + dateParameterEnd;
+        numberOfPlayers = ((TopPlayerParameters)Model.QueryParameter).NumberOfPlayers;
+        numberOfVisits = ((TopPlayerParameters)Model.QueryParameter).NumberOfVisits;
+        maxPlayers = ((TopPlayerParameters)Model.QueryParameter).MaxPlayers;
+        maxVisits = ((TopPlayerParameters)Model.QueryParameter).MaxVisits;
+        pageLength = ((TopPlayerParameters)Model.QueryParameter).PageLength;
+    }
+    var user = User.Identity as ClaimsIdentity;
+}
+@section styles {
+    @Styles.Render("~/Content/datatables_css")
+    @Styles.Render("~/Content/daterangepicker_css")
+    @Styles.Render("~/Content/icheck_css")
+    @Styles.Render("~/Content/simon_css")
+}
+                <div id="warningToDefaultDateRange" class="modal modal-warning fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">@GeneralResources.Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>@GeneralResources.ConfirmDefaultDateRange</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnDefaultDateYes" type="button" class="btn btn-outline pull-left" data-value="1">@GeneralResources.BtnYes</button>
+                                <button id="btnDefaultDateNo" type="button" class="btn btn-outline" data-dismiss="modal" data-value="0">@GeneralResources.BtnNo</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <form id="gbiForm">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-info">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xs-6">
+                                            <label for="daterange" class="control-label">@GeneralResources.SelectDateRange</label>
+                                            <div class="input-group input-group-sm">
+                                                <span id="btDateRange" class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input type="text" name="daterange" value="@dateParameter" class="form-control input-sm" placeholder="@GeneralResources.SelectDateRange">
+                                                <input type="hidden" name="queryParam[start]" value="@dateParameterStart"><input type="hidden" name="queryParam[end]" value="@dateParameterEnd">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                            <label for="playernumberinput" class="control-label">@TopPlayers.ParamPlayerNumber </label>
+                                            <input type="number" min="1" max="@maxPlayers" value="@numberOfPlayers" name="queryParam[numberOfPlayers]" class="form-control">
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                            <label for="visitnumberinput">@TopPlayers.ParamVisitNumber </label>
+                                            <input type="number" min="0" max="@maxVisits" value="@numberOfVisits" name="queryParam[numberOfVisits]" class="form-control">
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                        @if (Config.RefreshTimeOut == 0) {
+                                            <label class="control-label">&nbsp;</label>
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                </div>
+                                            </div>
+                                        }
+                                        else { 
+                                            <label class="control-label" id="labelAutoRefresh" title="@GeneralResources.CheckFreshTooltip">
+                                                @GeneralResources.AutoRefresh
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-btn">
+                                                    <div id="buttonAutoRefresh" class="toggle toggle-light"></div>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                </div>
+                                                <div class="input-group-btn" style="text-align:right">
+                                                    <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                </div>
+                                            </div>
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    @{  Model.InfoBox = new InfoBoxModel("TopPlayerTable"); }
+                                    <div class="box-tools pull-right">
+                                        @Html.Partial("ShowBoxControlButtons", Model)
+                                    </div>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <table id="topplayerlist" class="table table-bordered table-striped" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>@TopPlayers.PlayerListPlayerName</th>
+                                                <th>@TopPlayers.PlayerListBirthday</th>
+                                                <th>@TopPlayers.PlayerListGender</th>
+                                                <th>@TopPlayers.PlayerListLastVisit</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListTotalVIsit</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListWinLoss</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListHandle</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListTelephone</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListMobile</th>
+                                                <th>@TopPlayers.PlayerListEmail</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>@TopPlayers.PlayerListPlayerName</th>
+                                                <th>@TopPlayers.PlayerListBirthday</th>
+                                                <th>@TopPlayers.PlayerListGender</th>
+                                                <th>@TopPlayers.PlayerListLastVisit</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListTotalVIsit</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListWinLoss</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListHandle</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListTelephone</th>
+                                                <th class="dt-right">@TopPlayers.PlayerListMobile</th>
+                                                <th>@TopPlayers.PlayerListEmail</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+                <section class="resouceLabels"
+                    data-start="@GeneralResources.LabelStart"
+                    data-end="@GeneralResources.LabelEnd"
+                    data-paramplayerneeded="@TopPlayers.ParamPlayerNeeded"
+                    data-paramvisitorneeded="@TopPlayers.ParamVisitNeeded"
+                    data-datatablelanguage="@GeneralResources.DataTableLanguage"
+                    data-casinostarttime="@Config.CasinoStartTime"
+                    data-casinoendtime="@Config.CasinoEndTime"
+                    data-refreshtimeout="@Config.RefreshTimeOut"
+                    data-all="@GeneralResources.All"
+                    data-timeformat="@Config.CasinoTimeFormat"
+                    data-dateformat="@Config.CasinoDateFormat"
+                    data-currencythousand="@Config.CasinoCurrencyThousand"
+                    data-currencysymbol="@Config.CasinoCurrencySymbol"
+                    data-currencydecimal="@Config.CasinoCurrencyDecimal"
+                    data-currencyprecision="@Config.CasinoCurrencyPrecision"
+                    data-defaultstartdate="@Model.DefaultStartDate"
+                    data-defaultenddate="@Model.DefaultEndDate"
+                    data-sessiontimeout ="@Config.SessionTimeOut"
+                    data-logclienterror="@Config.LogClientError"
+                    data-warningbeforesessiontimeout ="@Config.WarningBeforeSessionTimeOut"
+                    data-sessionexpired ="@GeneralResources.SessionExpired"
+                    data-sessionexpirein ="@GeneralResources.SessionExpireIn"
+                    data-sessionhour ="@GeneralResources.SessionHour"
+                    data-sessionsecond ="@GeneralResources.SessionSecond"
+                    data-sessionminute ="@GeneralResources.SessionMinute"
+                    data-pagelength="@pageLength"
+                    data-maxplayers="@maxPlayers"
+                    data-maxvisits="@maxVisits"
+                    data-servercache="@Config.TopPlayersServerCache"
+                    data-playernumneeded="@TopPlayers.ParamPlayerNeeded"
+                    data-visitnumneeded="@TopPlayers.ParamVisitNeeded"
+                    data-visitoutofmaximum="@TopPlayers.ParamVisitsOutOfMaximum"
+                    data-playeroutofmaximum="@TopPlayers.ParamPlayersOutOfMaximum"
+                    data-btnchoosecolumn="@GeneralResources.BtnChooseColumn"
+                    data-btnexcel="@GeneralResources.BtnExcel"
+                    data-btnpdf="@GeneralResources.BtnPdf"
+                    data-btnprint="@GeneralResources.BtnPrint"
+                    data-menuquit="@GeneralResources.MenuQuit"
+                    data-menuadd="@GeneralResources.MenuAdd"
+                    data-menurestore="@GeneralResources.MenuRestore"
+                    data-menusave="@GeneralResources.MenuSave"
+                    data-querywaitinginfo="@GeneralResources.QueryWaitingInfo"
+                    data-daterangeerror="@GeneralResources.DateRangeError"
+                    data-daterangecustom="@GeneralResources.DateRangeCustom"
+                    data-daterangefrom="@GeneralResources.DateRangeFrom"
+                    data-daterangeto="@GeneralResources.DateRangeTo"
+                    data-daterangeoutoflimit="@GeneralResources.DateRangeOutOfLimit"
+                    data-daterangelanguage="@GeneralResources.DateRangeLanguage"
+                    data-daterangeapply="@GeneralResources.DateRangeApply"
+                    data-parameteryearerror="@GeneralResources.ParameterYearError"
+                    data-paramplayernumber="@TopPlayers.ParamPlayerNumber"
+                    data-paramvisitnumber="@TopPlayers.ParamVisitNumber"
+                    data-minimumparameteryear="@Config.MinimumParameterYear"
+                    data-daterangecancel="@GeneralResources.DateRangeCancel"
+                    data-columnplayername="@TopPlayers.PlayerListPlayerName"
+                    data-columnbirthday="@TopPlayers.PlayerListBirthday"
+                    data-columngender="@TopPlayers.PlayerListGender"
+                    data-columnlastvisit="@TopPlayers.PlayerListLastVisit"
+                    data-columntotalvisit="@TopPlayers.PlayerListTotalVIsit"
+                    data-columnwinloss="@TopPlayers.PlayerListWinLoss"
+                    data-columnhandle="@TopPlayers.PlayerListHandle"
+                    data-columntelephone="@TopPlayers.PlayerListTelephone"
+                    data-columnmobile="@TopPlayers.PlayerListMobile"
+                    data-columnemail="@TopPlayers.PlayerListEmail"
+                    data-reportname="@Constants.ReportName.TopPlayers"
+                    data-title="@TopPlayers.Title"
+                    data-username="@user.Name"
+                    data-total="@GeneralResources.Total">
+                </section>
+<!-- /.row -->
+@section scripts {
+    <!-- page script -->
+    @*NOTE: These do contains useful snippets on how to setup charts*@
+    <!-- DataTables for jQuery -->
+    @Scripts.Render("~/bundles/datatable")
+    @*NOTE: These contains useful snippets on how to setup charts*@
+    <!-- ChartJS 1.0.2 -->
+    @Scripts.Render("~/bundles/chartjs")
+    <!-- Date Range Picker -->
+    @Scripts.Render("~/bundles/daterangepicker")
+    @Scripts.Render("~/bundles/icheck")
+    @Scripts.Render("~/bundles/simon")
+    @Scripts.Render("~/bundles/accounting")
+    <script src="@StaticFile.Version("/Scripts/pages/topplayer.js")"></script>
+}

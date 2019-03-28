@@ -1,0 +1,40 @@
+﻿@using GenuinaBI.Models
+@model UIChartModel
+                    <div id="@Model.InfoListBox.BoxIdName" class="box-container @Model.InfoListBox.ColumnAttribute">
+                        <div class="box box-primary">
+                            <div class="box-header with-border @Model.InfoListBox.BgColor">
+                                <h3 class="box-title">@Model.InfoListBox.Head</h3>
+                                <div class="box-tools pull-right">
+                                    @{
+                                        Model.IsControlButtonDark = true; //control button disiplayed with dark color
+                                        Html.RenderPartial("ShowBoxControlButtons", Model);}
+                                </div>
+                            </div>
+                             <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <ul class="nav nav-stacked">
+                                            @foreach (InfoListItem item in Model.InfoListBox.ListItems)
+                                            {   
+                                            <text><li class="compact">
+                                                <a href="#">
+                                                @if (@item.Name=="Empty")
+                                                {
+                                                    <text>&nbsp;</text>
+                                                }
+                                                else
+                                                {
+                                                    <text>@item.Title</text>
+                                                }
+                                                    <span class="pull-right badge bg-blue" id="@item.Name" title="@item.SmallTitle">@item.Content</span>
+                                                </a>
+                                            </li></text>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>

@@ -1,0 +1,46 @@
+﻿@using GenuinaBI.Models
+@model UIChartModel
+                    <div id="@Model.InfoListBox.BoxIdName" class="box-container @Model.InfoListBox.ColumnAttribute">
+                        <div class="box infolist-box box-solid">
+                            <div class="infolist-box-header with-border @Model.InfoListBox.BgColor">
+                                <span class="infolist-box-title"><i class="@Model.InfoListBox.Icon"></i></span>
+                                <span id="@Model.InfoListBox.IdName" title="@Model.InfoListBox.HeadSmall" class="infolist-box-title"></span><br />
+                                <span class="infolist-box-smalltitle">@Model.InfoListBox.Head</span>
+                                <div class="infolist-box-tools pull-right">
+                                    @{Html.RenderPartial("ShowBoxControlButtons", Model);}
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-footer">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="nav nav-stacked">
+                                            @foreach (InfoListItem item in Model.InfoListBox.ListItems)
+                                            {
+    <text>                                        <li>
+                                                <a href="#">@item.Title<span class="pull-right badge bg-blue" id="@item.Name" title="@item.SmallTitle">@item.Content</span></a>
+                                            </li></text>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="box-title">&nbsp;</div>
+                                        <div class="row">
+                                            <div class="col-xs-7">
+                                                <canvas id="@Model.InfoListBox.DonutIdName"></canvas>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                <ul class="chart-legend clearfix">
+                                            @foreach (DonutChartLegend legend in Model.InfoListBox.DonutLegends)
+                                            {
+    <text>                                         <li><i class="fa fa-circle-o @legend.LegendColor"></i> <span id="@legend.IdName"></span><small> @legend.Legend</small></li></text>
+                                            }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                    </div>

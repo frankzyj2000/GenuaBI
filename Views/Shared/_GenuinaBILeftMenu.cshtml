@@ -1,0 +1,48 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Shared
+@using GenuinaBI.Extensions
+@using System.Security.Claims;
+@model UIChartModel
+@{  // This partial controls the top menu of the AdminLTE Template, being called automatically by _GenuinaBILayout
+    ViewBag.Layout = null;
+    var routeValues = this.ViewContext.RouteData.Values;
+    var controller = routeValues["controller"] as string;
+    var action = routeValues["action"] as string;
+    var currentLang = routeValues["lang"] as string;
+    var user = User.Identity as ClaimsIdentity;
+}
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <li class="header">@GeneralResources.MainNavigation</li>
+@if (user.IsAuthenticated)
+{
+    if (Model.MenuList != null && Model.MenuList.Count() > 0)
+    {
+        foreach (CFG_AppMenuesTranslation menu in Model.MenuList)
+        {
+            var index = Model.MenuList.IndexOf(menu); // Note # of menus should be less than the count of Constants.Icons
+<text>                    <li class="treeview"></text>
+                        <a href="@Url.Action("Index", "Dashboard", null)">
+                            <i class="@Constants.Icons[++index]"></i> <span>@menu.Description</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">  
+            @foreach (CFG_AppMenuItems menuitem in Model.AllMenuItemList)
+            {
+                 if (menuitem.IDMenuHeader == menu.IDMenuHeader)
+                 {
+                     CFG_AppMenuItemsTranslation menuitemTrans = @Model.AllMenuItemTranslationList.Find(i => i.IDMenuItem == menuitem.IDMenuItem);
+<text>                            <li><a href="@Url.Action(@menuitem.AssemblyPath, @menuitem.AssemblyType, null)"><i class="@Constants.Icons[0]"></i> @menuitemTrans.Description</a></li></text>
+                 }
+            }
+                        </ul>
+@:                    </li>
+        }
+    }
+}
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>

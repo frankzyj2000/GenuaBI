@@ -1,0 +1,405 @@
+﻿@using GenuinaBI.Models
+@using GenuinaBI.Resources.Marketing
+@using GenuinaBI.Resources.Shared
+@using GenuinaBI.Configuration
+@using GenuinaBI.Extensions
+@using System.Security.Claims;
+@model UIChartModel
+@{
+    // EXAMPLE:
+    // Using the ViewBag on a page to set the title and sub-title
+    // This will cause the _GenuinaBILayout to include this value in the page title
+    // And also set the top titles in the main content area of the page
+    ViewBag.Title = PlayerSearch.Title;
+    var routeValues = this.ViewContext.RouteData.Values;
+    var currentLang = routeValues["lang"] as string;
+    // EXAMPLE:
+    // Using the Breadcrumb class to create a dynamically generated breadcrumb on the page with
+    // Titles, plus optional icon and URLs
+    ViewBag.Breadcrumb = new Breadcrumb(new Crumb[] {
+        new Crumb(PageResources.Home, Url.Action("Index", "Dashboard", new { lang = @currentLang }), "fa-dashboard"),
+        new Crumb(PageResources.Marketing, "", "fa-dashboard"),
+        new Crumb(PageResources.PlayerSearch, "", "active")
+    });
+    var paramSlot = "";
+    var paramPlayerName = "";
+    var paramCardNo = "";
+    var pageLength = 10;
+    if (Model.QueryParameter != null)
+    {
+        paramSlot = ((PlayerSearchParameters)Model.QueryParameter).SlotMachine;
+        paramPlayerName = ((PlayerSearchParameters)Model.QueryParameter).PlayerName;
+        paramCardNo = ((PlayerSearchParameters)Model.QueryParameter).CardNumber;
+    }
+    var user = User.Identity as ClaimsIdentity;
+}
+@section styles {
+    @Styles.Render("~/Content/datatables_css")
+    @Styles.Render("~/Content/daterangepicker_css")
+    @Styles.Render("~/Content/icheck_css")
+    @Styles.Render("~/Content/simon_css")
+}
+                <div id="warningToDefaultDateRange" class="modal modal-warning fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">@GeneralResources.Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>@GeneralResources.ConfirmDefaultDateRange</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnDefaultDateYes" type="button" class="btn btn-outline pull-left" data-value="1">@GeneralResources.BtnYes</button>
+                                <button id="btnDefaultDateNo" type="button" class="btn btn-outline" data-dismiss="modal" data-value="0">@GeneralResources.BtnNo</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <form id="gbiForm">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-info">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xs-6">
+                                            <label for="paramSlot" class="control-label">@PlayerSearch.ParamSlotMachine</label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" value="@paramSlot" name="queryParam[slotMachine]" class="form-control input-sm">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                            <label for="paramPlayerName" class="control-label">@PlayerSearch.ParamPlayerName </label>
+                                            <input type="text" value="@paramPlayerName" name="queryParam[playerName]" class="form-control">
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                            <label for="paramCardNumber">@PlayerSearch.ParamCardNumber </label>
+                                            <input type="text" value="@paramCardNo" name="queryParam[cardNumber]" class="form-control">
+                                            <input type="hidden" value="@paramCardNo" name="queryParam[playerId]" class="form-control">
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                            @if (Config.RefreshTimeOut == 0)
+                                            {
+                                                <label class="control-label">&nbsp;</label>
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-btn" style="text-align:right">
+                                                        <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                    </div>
+                                                    <div class="input-group-btn" style="text-align:right">
+                                                        <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <label class="control-label" id="labelAutoRefresh" title="@GeneralResources.CheckFreshTooltip">
+                                                    @GeneralResources.AutoRefresh
+                                                </label>
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-btn">
+                                                        <div id="buttonAutoRefresh" class="toggle toggle-light"></div>
+                                                    </div>
+                                                    <div class="input-group-btn" style="text-align:right">
+                                                        <button type="button" id="buttonPDF" class="btn btn-info btn-flat">@GeneralResources.BtnPdf</button>
+                                                    </div>
+                                                    <div class="input-group-btn" style="text-align:right">
+                                                        <button type="button" id="buttonExecute" class="btn btn-go btn-flat">@GeneralResources.BtnGo</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                        @{
+                            List<InfoListItem> items = new List<InfoListItem>();
+                            items.Add(new InfoListItem("ProfilePlayerNo", PlayerSearch.ProfilePlayerNo, "", ""));
+                            items.Add(new InfoListItem("ProfilePlayerTitle", PlayerSearch.ProfilePlayerTitle, "", ""));
+                            items.Add(new InfoListItem("ProfileFirstName", PlayerSearch.ProfileFirstName, "", ""));
+                            items.Add(new InfoListItem("ProfileLastName", PlayerSearch.ProfileLastName, "", ""));
+                            items.Add(new InfoListItem("ProfileGender", PlayerSearch.ProfileGender, "", ""));
+                            items.Add(new InfoListItem("ProfileDOB", PlayerSearch.ProfileDOB, "", ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxProfile", "Profile", PlayerSearch.SubTitleProfile, "", "", "bg-green", "col-lg-5 col-sm-12", "", null);
+                            Html.RenderPartial("../Shared/ShowStandardInfoListBox", Model); 
+
+                            items.Clear();
+                            items.Add(new InfoListItem("AcctSlot", PlayerSearch.AcctSlot, "", ""));
+                            items.Add(new InfoListItem("AcctBalance", PlayerSearch.AcctBalance, "", ""));
+                            items.Add(new InfoListItem("AcctHandle", PlayerSearch.AcctHandle, "", ""));
+                            items.Add(new InfoListItem("AcctWinLoss", PlayerSearch.AcctWinLoss, "", ""));
+                            items.Add(new InfoListItem("AcctActive", PlayerSearch.AcctActive, "", ""));
+                            items.Add(new InfoListItem("Empty", "", "", ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxAccount", "Account", PlayerSearch.SubTitleAccountInfo, "", "", "bg-blue", "col-lg-3 col-sm-6 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowStandardInfoListBox", Model); 
+
+                            items.Clear();
+                            items.Add(new InfoListItem("MKCategory", PlayerSearch.MKCategory, "", ""));
+                            items.Add(new InfoListItem("MKCredit", PlayerSearch.MKCredit, "", ""));
+                            items.Add(new InfoListItem("MKLoyaltyAvailable", PlayerSearch.MKLoyaltyAvailable, "", ""));
+                            items.Add(new InfoListItem("MKLoyaltyConsumed", PlayerSearch.MKLoyaltyConsumed, "", ""));
+                            items.Add(new InfoListItem("MKSegmentRFM", PlayerSearch.MKSegmentRFM, "", ""));
+                            items.Add(new InfoListItem("MKSegmentClassic", PlayerSearch.MKSegmentClassic, "", ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxMarketing", "Marketing", PlayerSearch.SubTitleMarketingInfo, "", "", "bg-aqua", "col-lg-4 col-sm-6 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowStandardInfoListBox", Model); 
+
+                            List<InfoListTab> tabs = new List<InfoListTab>();
+                            items.Clear();
+                            items.Add(new InfoListItem("ContactNickName", PlayerSearch.ContactNickName, "", ""));
+                            items.Add(new InfoListItem("ContactLanguage", PlayerSearch.ContactLanguage, "", ""));
+                            items.Add(new InfoListItem("ContactEmail", PlayerSearch.ContactEmail, "", ""));
+                            items.Add(new InfoListItem("ContactPhone", PlayerSearch.ContactPhone, "", ""));
+                            items.Add(new InfoListItem("ContactCelluar", PlayerSearch.ContactCelluar, "", ""));
+                            items.Add(new InfoListItem("ContactAddress", PlayerSearch.ContactAddress, "", ""));
+                            items.Add(new InfoListItem("ContactPostalCode", PlayerSearch.ContactPostalCode, "", ""));
+                            items.Add(new InfoListItem("ContactCity", PlayerSearch.ContactCity, "", ""));
+                            items.Add(new InfoListItem("ContactCountry", PlayerSearch.ContactCountry, "", ""));
+                            items.Add(new InfoListItem("ContactOccupation", PlayerSearch.ContactOccupation, "", ""));
+                            items.Add(new InfoListItem("ContactMartial", PlayerSearch.ContactMartial, "", ""));
+                            items.Add(new InfoListItem("ContactAcctCreated", PlayerSearch.ContactAcctCreated, "", ""));
+                            items.Add(new InfoListItem("ContactAgent", PlayerSearch.ContactAgent, "", ""));
+                            items.Add(new InfoListItem("ContactCURP", PlayerSearch.ContactCURP, "", ""));
+                            items.Add(new InfoListItem("ContactRFC", PlayerSearch.ContactRFC, "", ""));
+                            items.Add(new InfoListItem("ContactDocType", PlayerSearch.ContactDocType, "", ""));
+                            items.Add(new InfoListItem("ContctDocumentNo", PlayerSearch.ContctDocumentNo, "", ""));
+                            tabs.Add(new InfoListTab(items, "tabContact", "Contact", PlayerSearch.SubTitleContactInfo, "data"));
+
+                            //must create new one, otherwise the above items will be replaced with the data once it was redefined
+                            items = new List<InfoListItem>();
+                            items.Add(new InfoListItem("CashDeskCardNumber", PlayerSearch.CashDeskCardNumber, "", ""));
+                            items.Add(new InfoListItem("CashDeskTime", PlayerSearch.CashDeskTime, "", ""));
+                            items.Add(new InfoListItem("CashDeskTicketNumber", PlayerSearch.CashDeskTicketNumber, "", ""));
+                            items.Add(new InfoListItem("CashDeskCashier", PlayerSearch.CashDeskCashier, "", ""));
+                            items.Add(new InfoListItem("CashDeskAmountIn", PlayerSearch.CashDeskAmountIn, "", ""));
+                            items.Add(new InfoListItem("CashDeskAmountOut", PlayerSearch.CashDeskAmountOut, "", ""));                          
+                            tabs.Add(new InfoListTab(items, "tabCashdeskHistory", "tableCashdeskHistory", PlayerSearch.SubTitleCashdeskHistory, "table"));
+
+                            //must create new one, otherwise the above items will be replaced with the data once it was redefined
+                            items = new List<InfoListItem>();
+                            items.Add(new InfoListItem("PromotionName", PlayerSearch.PromotionName, "", ""));
+                            items.Add(new InfoListItem("PromotionAmount", PlayerSearch.PromotionAmount, "", ""));
+                            items.Add(new InfoListItem("PromotionAssignedTime", PlayerSearch.PromotionAssignedTime, "", ""));
+                            items.Add(new InfoListItem("PromotionCardNumber", PlayerSearch.PromotionCardNumber, "", ""));                       
+                            tabs.Add(new InfoListTab(items, "tabPromoHistory", "tablePromoHistory", PlayerSearch.SubTitlePromoHistory, "table"));
+
+                            items = new List<InfoListItem>(); //must create new one
+                            items.Add(new InfoListItem("GameHistoryStart", PlayerSearch.GameHistoryStart, "", ""));
+                            items.Add(new InfoListItem("GameHistoryGame", PlayerSearch.GameHistoryGame, "", ""));
+                            items.Add(new InfoListItem("GameHistoryDuration", PlayerSearch.GameHistoryDuration, "", ""));
+                            items.Add(new InfoListItem("GameHistoryDrop", PlayerSearch.GameHistoryDrop, "", ""));
+                            items.Add(new InfoListItem("GameHistoryAvgBet", PlayerSearch.GameHistoryAvgBet, "", ""));
+                            items.Add(new InfoListItem("GameHistoryWinLoss", PlayerSearch.GameHistoryWinLoss, "", ""));
+                            items.Add(new InfoListItem("GameHistorySlot", PlayerSearch.GameHistorySlot, "", ""));
+                            items.Add(new InfoListItem("GameHistoryProvider", PlayerSearch.GameHistoryProvider, "", ""));
+                            tabs.Add(new InfoListTab(items, "tabGameHistory", "tableGameHistory", PlayerSearch.SubTitleGameHistory, "table"));
+
+                            items = new List<InfoListItem>(); //must create new one
+                            items.Add(new InfoListItem("CardNo", PlayerSearch.CardNo, "", ""));
+                            items.Add(new InfoListItem("CardIssueDate", PlayerSearch.CardIssueDate, "", ""));
+                            items.Add(new InfoListItem("CardStatus", PlayerSearch.CardStatus, "", ""));
+                            items.Add(new InfoListItem("CardIssueMethod", PlayerSearch.CardIssueMethod, "", ""));
+                            tabs.Add(new InfoListTab(items, "tabCashlessCards", "tableCashlessCards", PlayerSearch.SubTitleCashlessCards, "table"));
+
+                            Model.InfoListTabBox = new InfoListTabModel(tabs, "boxAdditionalInfo", "AdditionalInfo", PlayerSearch.SubTitleAdditionalInfo, "", "", "", "col-xs-12");
+                            Html.RenderPartial("../Shared/ShowComplexTabInfoBox", Model);
+
+                            Model.InfoBox = new InfoBoxModel("boxVisitTrendChart", PlayerSearch.SubTitleVisitTrends, "chartVisitTrend", "col-md-6 col-xs-12");
+                            Html.RenderPartial("../Shared/ShowChartLengendBox", Model);
+                            Model.InfoBox = new InfoBoxModel("boxSpendingTrendChart", PlayerSearch.SubTitleSpendingTrends, "chartSpendingTrend", "col-md-6 col-xs-12");
+                            Html.RenderPartial("../Shared/ShowChartLengendBox", Model);
+
+                            items.Clear();
+                            items.Add(new InfoListItem("ActivityDayNetWin", PlayerSearch.ActivityNetWin, "", ""));
+                            items.Add(new InfoListItem("ActivityDayDrop", PlayerSearch.ActivityDrop, "", ""));
+                            items.Add(new InfoListItem("ActivityDayBuyIn", PlayerSearch.ActivityBuyIn, "", ""));
+                            items.Add(new InfoListItem("ActivityDaySessionTime", PlayerSearch.ActivitySessionTime, "", ""));
+                            items.Add(new InfoListItem("ActivityDayPromotion", PlayerSearch.ActivityPromotion, "", ""));
+                            items.Add(new InfoListItem("ActivityDayConsumption", PlayerSearch.ActivityConsumption, "", ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxActivityDay", "ActivityDay", PlayerSearch.SubTitleActivityDay, "", "", "bg-red", "col-md-4 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowStandardInfoListBox", Model);
+
+                            items.Clear();
+                            items.Add(new InfoListItem("ActivityMonthNetWin", PlayerSearch.ActivityNetWin, "", ""));
+                            items.Add(new InfoListItem("ActivityMonthDrop", PlayerSearch.ActivityDrop, "", ""));
+                            items.Add(new InfoListItem("ActivityMonthBuyIn", PlayerSearch.ActivityBuyIn, "", ""));
+                            items.Add(new InfoListItem("ActivityMonthSessionTime", PlayerSearch.ActivitySessionTime, "", ""));
+                            items.Add(new InfoListItem("ActivityMonthVisits", PlayerSearch.ActivityVisits, "", ""));
+                            items.Add(new InfoListItem("ActivityMonthConsumption", PlayerSearch.ActivityConsumption, "", ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxActivityMonth", "ActivityMonth", PlayerSearch.SubTitleActivityMonth, "", "", "bg-green", "col-md-4 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowStandardInfoListBox", Model);
+
+                            items.Clear();
+                            items.Add(new InfoListItem("ActivityQuarterNetWin", PlayerSearch.ActivityNetWin, "", ""));
+                            items.Add(new InfoListItem("ActivityQuarterDrop", PlayerSearch.ActivityDrop, "", ""));
+                            items.Add(new InfoListItem("ActivityQuarterBuyIn", PlayerSearch.ActivityBuyIn, "", ""));
+                            items.Add(new InfoListItem("ActivityQuarterSessionTime", PlayerSearch.ActivitySessionTime, "", ""));
+                            items.Add(new InfoListItem("ActivityQuarterVisits", PlayerSearch.ActivityVisits, "", ""));
+                            items.Add(new InfoListItem("ActivityQuarterConsumption", PlayerSearch.ActivityConsumption, "", ""));
+                            Model.InfoListBox = new InfoListBoxModel(items, "boxActivityQuarter", "ActivityQuarter", PlayerSearch.SubTitleActivityQuarter, "", "", "bg-blue", "col-md-4 col-xs-12", "", null);
+                            Html.RenderPartial("../Shared/ShowStandardInfoListBox", Model);
+
+                            tabs.Clear();
+                            items.Clear();
+                            items.Add(new InfoListItem("PreferenceGame", PlayerSearch.PreferenceGame, "", ""));
+                            items.Add(new InfoListItem("PreferenceDuration", PlayerSearch.PreferenceDuration, "", ""));
+                            items.Add(new InfoListItem("PreferenceDrop", PlayerSearch.PreferenceDrop, "", ""));
+                            items.Add(new InfoListItem("PreferenceAvgBet", PlayerSearch.PreferenceAvgBet, "", ""));
+                            items.Add(new InfoListItem("PreferenceWinLoss", PlayerSearch.PreferenceWinLoss, "", ""));
+                            items.Add(new InfoListItem("PreferenceVisits", PlayerSearch.PreferenceVisits, "", ""));
+                            items.Add(new InfoListItem("PreferenceProvider", PlayerSearch.PreferenceProvider, "", ""));
+                            items.Add(new InfoListItem("PreferenceGameTypes", PlayerSearch.PreferenceGameTypes, "", ""));
+                            tabs.Add(new InfoListTab(items, "tabDayPreference", "tableDayPreference", PlayerSearch.TabPreferencesToday, "table"));
+                            tabs.Add(new InfoListTab(items, "tabMonthPreference", "tableMonthPreference", PlayerSearch.TabPreferencesMonth, "table"));
+                            tabs.Add(new InfoListTab(items, "tabQuarterPreference", "tableQuarterPreference", PlayerSearch.TabPreferencesQuarter, "table"));
+                            tabs.Add(new InfoListTab(items, "tabAllPreference", "tableAllPreference", PlayerSearch.TabPreferencesAll, "table"));
+
+                            Model.InfoListTabBox = new InfoListTabModel(tabs, "boxPreferences", "Preferences", PlayerSearch.SubTitlePreferences, "", "", "", "col-xs-12");
+                            Html.RenderPartial("../Shared/ShowComplexTabInfoBox", Model);                            
+                            } 
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <section class="resouceLabels"
+                    data-datatablelanguage="@GeneralResources.DataTableLanguage"
+                    data-casinostarttime="@Config.CasinoStartTime"
+                    data-casinoendtime="@Config.CasinoEndTime"
+                    data-refreshtimeout="@Config.RefreshTimeOut"
+                    data-timeformat="@Config.CasinoTimeFormat"
+                    data-dateformat="@Config.CasinoDateFormat"
+                    data-currencythousand="@Config.CasinoCurrencyThousand"
+                    data-currencysymbol="@Config.CasinoCurrencySymbol"
+                    data-currencydecimal="@Config.CasinoCurrencyDecimal"
+                    data-currencyprecision="@Config.CasinoCurrencyPrecision"
+                    data-logclienterror="@Config.LogClientError"
+                    data-pagelength="@pageLength"
+                    data-sessiontimeout="@Config.SessionTimeOut"
+                    data-warningbeforesessiontimeout="@Config.WarningBeforeSessionTimeOut"
+                    data-sessionexpired="@GeneralResources.SessionExpired"
+                    data-sessionexpirein="@GeneralResources.SessionExpireIn"
+                    data-sessionhour="@GeneralResources.SessionHour"
+                    data-sessionsecond="@GeneralResources.SessionSecond"
+                    data-sessionminute="@GeneralResources.SessionMinute"
+                    data-buttonyes="@GeneralResources.BtnYes"
+                    data-buttonno="@GeneralResources.BtnNo"
+                    data-menuquit="@GeneralResources.MenuQuit"
+                    data-menuadd="@GeneralResources.MenuAdd"
+                    data-menurestore="@GeneralResources.MenuRestore"
+                    data-menusave="@GeneralResources.MenuSave"
+                    data-confirmdefaultdate="@GeneralResources.ConfirmDefaultDate"
+                    data-all="@GeneralResources.All"
+                    data-querywaitinginfo="@GeneralResources.QueryWaitingInfo"
+                    data-dateranglimiterror="@GeneralResources.DateRangeOutOfLimit"
+                    data-btnchoosecolumn="@GeneralResources.BtnChooseColumn"
+                    data-btnexcel="@GeneralResources.BtnExcel"
+                    data-btnpdf="@GeneralResources.BtnPdf"
+                    data-btnprint="@GeneralResources.BtnPrint"
+                    data-reportname="@Constants.ReportName.PlayerSearch"
+                    data-invalidcardnumber ="@PlayerSearch.ParamInvalidCardNumber"
+                    data-invalidslotmachine ="@PlayerSearch.ParamInvalidSlotMachine"
+                    data-invalidparam ="@PlayerSearch.ParamInvalid"
+                    data-title="@PlayerSearch.Title"
+                    data-subtitleprofile="@PlayerSearch.SubTitleProfile"
+                    data-subtitleaccount="@PlayerSearch.SubTitleAccountInfo"
+                    data-subtitlemarketinginfo="@PlayerSearch.SubTitleMarketingInfo"
+                    data-subtitleadditionalinfo="@PlayerSearch.SubTitleAdditionalInfo"
+                    data-subtitlevisittrends="@PlayerSearch.SubTitleVisitTrends"
+                    data-subtitlespendingtrends="@PlayerSearch.SubTitleSpendingTrends"
+                    data-subtitleactivitymonth="@PlayerSearch.SubTitleActivityMonth"
+                    data-subtitleactivityquarter="@PlayerSearch.SubTitleActivityQuarter"
+                    data-subtitleactivityday="@PlayerSearch.SubTitleActivityDay"
+                    data-tabpreferencesall="@PlayerSearch.TabPreferencesAll"
+                    data-tabpreferencestoday="@PlayerSearch.TabPreferencesToday"
+                    data-tabpreferencesmonth="@PlayerSearch.TabPreferencesMonth"
+                    data-tabpreferencesquarter="@PlayerSearch.TabPreferencesQuarter"
+                    data-subtitlecashdeskhistory="@PlayerSearch.SubTitleCashdeskHistory"
+                    data-subtitlecashlesscards="@PlayerSearch.SubTitleCashlessCards"
+                    data-subtitlecontactinfo="@PlayerSearch.SubTitleContactInfo"
+                    data-subtitlegamehistory="@PlayerSearch.SubTitleGameHistory"
+                    data-subtitlepromohistory="@PlayerSearch.SubTitlePromoHistory"
+                    data-acctactive="@PlayerSearch.AcctActive"
+                    data-acctbalance="@PlayerSearch.AcctBalance"
+                    data-accthandle="@PlayerSearch.AcctHandle"
+                    data-acctslot="@PlayerSearch.AcctSlot"
+                    data-acctwinloss="@PlayerSearch.AcctWinLoss"
+                    data-activitybuyin="@PlayerSearch.ActivityBuyIn"
+                    data-activityconsumption="@PlayerSearch.ActivityConsumption"
+                    data-activitydrop="@PlayerSearch.ActivityDrop"
+                    data-activitynetwin="@PlayerSearch.ActivityNetWin"
+                    data-activitypromotion="@PlayerSearch.ActivityPromotion"
+                    data-activitysessiontime="@PlayerSearch.ActivitySessionTime"
+                    data-activityvisits="@PlayerSearch.ActivityVisits"
+                    data-cardissuedate="@PlayerSearch.CardIssueDate"
+                    data-cardissuemethod="@PlayerSearch.CardIssueMethod"
+                    data-cardno="@PlayerSearch.CardNo"
+                    data-cardstatus="@PlayerSearch.CardStatus"
+                    data-contactacctcreated="@PlayerSearch.ContactAcctCreated"
+                    data-contactaddress="@PlayerSearch.ContactAddress"
+                    data-contactagent="@PlayerSearch.ContactAgent"
+                    data-contactcelluar="@PlayerSearch.ContactCelluar"
+                    data-contactcity="@PlayerSearch.ContactCity"
+                    data-contactcountry="@PlayerSearch.ContactCountry"
+                    data-contactcurp="@PlayerSearch.ContactCURP"
+                    data-contactdoctype="@PlayerSearch.ContactDocType"
+                    data-contactemail="@PlayerSearch.ContactEmail"
+                    data-contactlanguage="@PlayerSearch.ContactLanguage"
+                    data-contactmartial="@PlayerSearch.ContactMartial"
+                    data-contactnickname="@PlayerSearch.ContactNickName"
+                    data-contactoccupation="@PlayerSearch.ContactOccupation"
+                    data-contactphone="@PlayerSearch.ContactPhone"
+                    data-contactpostalcode="@PlayerSearch.ContactPostalCode"
+                    data-contactrfc="@PlayerSearch.ContactRFC"
+                    data-contctdocumentno="@PlayerSearch.ContctDocumentNo"
+                    data-gamehistoryavgbet="@PlayerSearch.GameHistoryAvgBet"
+                    data-gamehistorydrop="@PlayerSearch.GameHistoryDrop"
+                    data-gamehistoryduration="@PlayerSearch.GameHistoryDuration"
+                    data-gamehistorygame="@PlayerSearch.GameHistoryGame"
+                    data-gamehistoryprovider="@PlayerSearch.GameHistoryProvider"
+                    data-gamehistoryslot="@PlayerSearch.GameHistorySlot"
+                    data-gamehistorystart="@PlayerSearch.GameHistoryStart"
+                    data-gamehistorywinloss="@PlayerSearch.GameHistoryWinLoss"
+                    data-mkcategory="@PlayerSearch.MKCategory"
+                    data-mkcredit="@PlayerSearch.MKCredit"
+                    data-mkloyaltyavailable="@PlayerSearch.MKLoyaltyAvailable"
+                    data-mkloyaltyconsumed="@PlayerSearch.MKLoyaltyConsumed"
+                    data-mksegmentclassic="@PlayerSearch.MKSegmentClassic"
+                    data-mksegmentrfm="@PlayerSearch.MKSegmentRFM"
+                    data-paramcardnumber="@PlayerSearch.ParamCardNumber"
+                    data-paramplayername="@PlayerSearch.ParamPlayerName"
+                    data-paramslotmachine="@PlayerSearch.ParamSlotMachine"
+                    data-preferenceavgbet="@PlayerSearch.PreferenceAvgBet"
+                    data-preferencedrop="@PlayerSearch.PreferenceDrop"
+                    data-preferenceduration="@PlayerSearch.PreferenceDuration"
+                    data-preferencegame="@PlayerSearch.PreferenceGame"
+                    data-preferencegametypes="@PlayerSearch.PreferenceGameTypes"
+                    data-preferenceprovider="@PlayerSearch.PreferenceProvider"
+                    data-preferencevisits="@PlayerSearch.PreferenceVisits"
+                    data-preferencewinloss="@PlayerSearch.PreferenceWinLoss"
+                    data-profiledob="@PlayerSearch.ProfileDOB"
+                    data-profilefirstname="@PlayerSearch.ProfileFirstName"
+                    data-profilegender="@PlayerSearch.ProfileGender"
+                    data-profilelastname="@PlayerSearch.ProfileLastName"
+                    data-profileplayerno="@PlayerSearch.ProfilePlayerNo"
+                    data-profileplayertitle="@PlayerSearch.ProfilePlayerTitle"
+                    data-username="@user.Name"
+                    data-total="@GeneralResources.Total">
+                </section>
+@section scripts {
+    <!-- page script -->
+    @*NOTE: These do contains useful snippets on how to setup charts*@
+    <!-- DataTables for jQuery -->
+    @Scripts.Render("~/bundles/datatable")
+    @*NOTE: These contains useful snippets on how to setup charts*@
+    <!-- ChartJS 1.0.2 -->
+    @Scripts.Render("~/bundles/chartjs")
+    <!-- Date Range Picker -->
+    @Scripts.Render("~/bundles/daterangepicker")
+    @Scripts.Render("~/bundles/icheck")
+    @Scripts.Render("~/bundles/simon")
+    @Scripts.Render("~/bundles/accounting")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="@StaticFile.Version("/Scripts/pages/playerSearch.js")"></script>
+}

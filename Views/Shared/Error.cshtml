@@ -1,0 +1,37 @@
+﻿@using GenuinaBI.Resources.Shared
+@model GenuinaBI.Models.ErrorViewModel
+@{
+    Layout = null;
+    ViewBag.Title = Model.Title;
+}
+<fieldset>
+    <div class="containercontent">
+        @Model.Message
+    </div>
+    <div class="containercontent">
+        @Model.DetailErrorMessage
+    </div>
+    @if (User.Identity.IsAuthenticated) //switch to logout
+    {
+    <div class="containercontent">
+        <a href="/Account/Logout">@GeneralResources.BtnLogout</a>
+    </div>
+        // refresh page
+        if (this.Model.RedirectToTimeout > 0)
+        {
+            Response.Headers.Add("Refresh", this.Model.RedirectToTimeout.ToString() + ";" + "/Account/Logout");
+        }
+    }
+    else if (!string.IsNullOrEmpty(Model.RedirectTo))
+    {
+        <div class="containercontent">
+            <a href="@Model.RedirectTo">@GeneralResources.ClickToContinue</a>
+        </div>
+        // refresh page
+        if (this.Model.RedirectToTimeout > 0)
+        {
+            Response.Headers.Add("Refresh", this.Model.RedirectToTimeout.ToString() + ";" + this.Model.RedirectTo);
+        }
+    }
+</fieldset>
+

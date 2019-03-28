@@ -1,0 +1,39 @@
+﻿@using GenuinaBI.Models
+@model UIChartModel
+@{
+    int idxj = 0;
+    int column = 1;
+    int length = Model.InfoListTabBox.TabList.Size;
+    int maxline = Math.Ceiling(length / 3); //show 3 columns per row
+}
+                                           <div class="row">
+                                               <div class="col-md-4 col-xs-12">
+                                                   <ul class="nav nav-stacked">
+                                                   @foreach (InfoListItem item in Model.Content)
+                                                   {    
+                                                       <li class="compact">
+                                                           <a href="#">
+                                                       @if (item.Name == "Empty")
+                                                       {   
+                                                           <text>&nbsp;</text>
+                                                       }   
+                                                       else
+                                                       {   
+                                                           <text>@item.Title</text>
+                                                       }   
+                                                                <span class="pull-right badge bg-blue" id="@item.Name" title="@item.SmallTitle">@item.Content</span>
+                                                            </a>
+                                                        </li>
+                                                        @idxj++;
+                                                        @if (idxj >= (maxline * column))   //display new column
+                                                        {                                                            
+                                                    </ul>    
+                                                </div>
+                                                <text><div class="col-md-4 col-xs-12">
+                                                    <ul class="nav nav-stacked"></text>
+                                                            column++;
+                                                        }
+                                                    }
+                                                    </ul>
+                                                </div>
+                                            </div>
