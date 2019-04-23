@@ -1,0 +1,537 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GENUINADB_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="GenuinaDBEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="GetSlotOccupationList" ReturnType="Collection(GENUINADB_Model.SlotOccupationST)">
+      <Parameter Name="BD" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetTotalSlots" ReturnType="Collection(Int32)">
+      <Parameter Name="DateTimeStart" Mode="In" Type="DateTime" />
+      <Parameter Name="DateTimeEnd" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetOperationSummaryList" ReturnType="Collection(GENUINADB_Model.OperationSummaryST)">
+      <Parameter Name="DateTimeStart" Mode="In" Type="DateTime" />
+      <Parameter Name="DateTimeEnd" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetOperationSummaryProviderList" ReturnType="Collection(GENUINADB_Model.OperationSummaryProviderST)">
+      <Parameter Name="DateTimeStart" Mode="In" Type="DateTime" />
+      <Parameter Name="DateTimeEnd" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <EntitySet Name="GBI_CFG_DashboardCharts" EntityType="GENUINADB_Model.GBI_CFG_DashboardCharts" />
+    <FunctionImport Name="GetTopPlayerList" ReturnType="Collection(GENUINADB_Model.TopPlayerInfoST)">
+      <Parameter Name="DateStart" Mode="In" Type="DateTime" />
+      <Parameter Name="DateEnd" Mode="In" Type="DateTime" />
+      <Parameter Name="Qty" Mode="In" Type="Int32" />
+      <Parameter Name="Visit" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetOperationSummaryTrendList" ReturnType="Collection(GENUINADB_Model.OperationSummaryTrendST)">
+      <Parameter Name="Day" Mode="In" Type="DateTime" />
+      <Parameter Name="DefaultStartTime" Mode="In" Type="String" />
+      <Parameter Name="DefaultEndTime" Mode="In" Type="String" />
+      <Parameter Name="num" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="CFG_AppMenuesTranslation" EntityType="GENUINADB_Model.CFG_AppMenuesTranslation" />
+    <EntitySet Name="CFG_AppMenuItemsTranslation" EntityType="GENUINADB_Model.CFG_AppMenuItemsTranslation" />
+    <EntitySet Name="CFG_Apps" EntityType="GENUINADB_Model.CFG_Apps" />
+    <EntitySet Name="CFG_Languages" EntityType="GENUINADB_Model.CFG_Languages" />
+    <EntitySet Name="CFG_Users" EntityType="GENUINADB_Model.CFG_Users" />
+    <AssociationSet Name="FK_CFG_AppMenuesTranslation_CFG_Languages" Association="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_Languages">
+      <End Role="CFG_Languages" EntitySet="CFG_Languages" />
+      <End Role="CFG_AppMenuesTranslation" EntitySet="CFG_AppMenuesTranslation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuItemsTranslation_CFG_Languages" Association="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_Languages">
+      <End Role="CFG_Languages" EntitySet="CFG_Languages" />
+      <End Role="CFG_AppMenuItemsTranslation" EntitySet="CFG_AppMenuItemsTranslation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_Users_CFG_Languages" Association="GENUINADB_Model.FK_CFG_Users_CFG_Languages">
+      <End Role="CFG_Languages" EntitySet="CFG_Languages" />
+      <End Role="CFG_Users" EntitySet="CFG_Users" />
+    </AssociationSet>
+    <EntitySet Name="CFG_AppMenues" EntityType="GENUINADB_Model.CFG_AppMenues" />
+    <EntitySet Name="CFG_AppMenuItems" EntityType="GENUINADB_Model.CFG_AppMenuItems" />
+    <AssociationSet Name="FK_CFG_AppMenues_CFG_Apps" Association="GENUINADB_Model.FK_CFG_AppMenues_CFG_Apps">
+      <End Role="CFG_Apps" EntitySet="CFG_Apps" />
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuesTranslation_CFG_AppMenues" Association="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_AppMenues">
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+      <End Role="CFG_AppMenuesTranslation" EntitySet="CFG_AppMenuesTranslation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuItems_CFG_AppMenues" Association="GENUINADB_Model.FK_CFG_AppMenuItems_CFG_AppMenues">
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+      <End Role="CFG_AppMenuItems" EntitySet="CFG_AppMenuItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems" Association="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems">
+      <End Role="CFG_AppMenuItems" EntitySet="CFG_AppMenuItems" />
+      <End Role="CFG_AppMenuItemsTranslation" EntitySet="CFG_AppMenuItemsTranslation" />
+    </AssociationSet>
+    <EntitySet Name="CFG_UserGroups" EntityType="GENUINADB_Model.CFG_UserGroups" />
+    <AssociationSet Name="CFG_AppMenuesAuthorizations" Association="GENUINADB_Model.CFG_AppMenuesAuthorizations">
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+      <End Role="CFG_UserGroups" EntitySet="CFG_UserGroups" />
+    </AssociationSet>
+    <AssociationSet Name="CFG_AppMenuItemsAuthorizations" Association="GENUINADB_Model.CFG_AppMenuItemsAuthorizations">
+      <End Role="CFG_AppMenuItems" EntitySet="CFG_AppMenuItems" />
+      <End Role="CFG_UserGroups" EntitySet="CFG_UserGroups" />
+    </AssociationSet>
+    <EntitySet Name="CFG_Casinos" EntityType="GENUINADB_Model.CFG_Casinos" />
+    <AssociationSet Name="CFG_UsersInGroups" Association="GENUINADB_Model.CFG_UsersInGroups">
+      <End Role="CFG_UserGroups" EntitySet="CFG_UserGroups" />
+      <End Role="CFG_Users" EntitySet="CFG_Users" />
+    </AssociationSet>
+    <EntitySet Name="DBVersionGnSys" EntityType="GENUINADB_Model.DBVersionGnSy" />
+    <FunctionImport Name="GetMarketingPlayer" ReturnType="Collection(GENUINADB_Model.MarketingPlayerST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetMarketingPlayerReferences" ReturnType="Collection(GENUINADB_Model.MarketingPlayerReferencesST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetMarketingPlayerTrends" ReturnType="Collection(GENUINADB_Model.MarketingPlayerTrendsST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetMarketingPlayerActivity" ReturnType="Collection(GENUINADB_Model.MarketingPlayerActivityST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="GetMarketingPlayerCards" ReturnType="Collection(GENUINADB_Model.MarketingPlayerCardsST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetMarketingPlayerCashDesk" ReturnType="Collection(GENUINADB_Model.MarketingPlayerCashDeskST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetMarketingPlayerGameHistory" ReturnType="Collection(GENUINADB_Model.MarketingPlayerGameHistoryST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetMarketingPlayerPromo" ReturnType="Collection(GENUINADB_Model.MarketingPlayerPromoST)">
+      <Parameter Name="IDPlayer" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="GBI_CFG_DashboardCharts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="ChartName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ChartGroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ChartType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AddedToDashboard" Type="Boolean" Nullable="false" />
+    <Property Name="ChartIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ChartBgColor" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <ComplexType Name="OperationSummaryProviderST">
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="50" />
+    <Property Type="Byte" Name="IDGMManufacturer" Nullable="false" />
+    <Property Type="Decimal" Name="CashOut" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="CashIN" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int64" Name="Sesiones" Nullable="true" />
+    <Property Type="Int64" Name="CantPlayer" Nullable="true" />
+    <Property Type="Decimal" Name="HandPayments" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="PROMO_IN" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="PROMO_OUT" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="SlotOccupationST">
+    <Property Type="Int32" Name="Hora" Nullable="true" />
+    <Property Type="DateTime" Name="HoraInicio" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="HoraFin" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="Players" Nullable="true" />
+    <Property Type="Int32" Name="Slots" Nullable="true" />
+    <Property Type="Int32" Name="TotalSession" Nullable="true" />
+    <Property Type="Decimal" Name="WinLoss" Nullable="true" Precision="38" Scale="4" />
+    <Property Type="Decimal" Name="Handle" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int64" Name="TotalPlayers" Nullable="true" />
+    <Property Type="Int64" Name="TotalSlotsOcuped" Nullable="true" />
+    <Property Type="DateTime" Name="DateTimeStart" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateTimeEnd" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="TopPlayerInfoST">
+    <Property Type="String" Name="PlayerName" Nullable="false" MaxLength="101" />
+    <Property Type="DateTime" Name="BirthdayDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Gender" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="LastVisit" Nullable="true" MaxLength="8" />
+    <Property Type="Int32" Name="TotalVisits" Nullable="true" />
+    <Property Type="Decimal" Name="WinLoss" Nullable="true" Precision="12" Scale="2" />
+    <Property Type="Decimal" Name="Handle" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="String" Name="Telofono" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Celular" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="OperationSummaryST">
+    <Property Type="Decimal" Name="AmountIn" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AmountOut" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Taxes" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TotalSesiones" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="OcupacionActual" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="OcupacionPeriodo" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Promociones" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="EspecialPromo" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CanceledPromo" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="NamePromo20" Nullable="true" MaxLength="300" />
+    <Property Type="Decimal" Name="TotalHP" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="TotalJP" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Int64" Name="TotalSlots" Nullable="true" />
+    <Property Type="Int64" Name="TotalSlotsOcuped" Nullable="true" />
+    <Property Type="Decimal" Name="AmountPlayerAccountVariation" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PlayerAccountIN" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PlayerAccountOUT" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="OperationSummaryTrendST">
+    <Property Type="DateTime" Name="StartDateTime" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="DayDifference" Nullable="true" />
+    <Property Type="Decimal" Name="HardSoftCountBill" Nullable="true" Precision="38" Scale="4" />
+    <Property Type="Decimal" Name="AmountIn" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="AmountOut" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="Taxes" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="HandPayments" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="Jackpots" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="CashIn" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="CashOut" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <EntityType Name="CFG_AppMenuesTranslation">
+    <Key>
+      <PropertyRef Name="IDMenuHeader" />
+      <PropertyRef Name="IDLanguage" />
+    </Key>
+    <Property Name="IDMenuHeader" Type="Int32" Nullable="false" />
+    <Property Name="IDLanguage" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tooltip" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Notes" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CFG_Languages" Relationship="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_Languages" FromRole="CFG_AppMenuesTranslation" ToRole="CFG_Languages" />
+    <NavigationProperty Name="CFG_AppMenues" Relationship="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_AppMenues" FromRole="CFG_AppMenuesTranslation" ToRole="CFG_AppMenues" />
+  </EntityType>
+  <EntityType Name="CFG_AppMenuItemsTranslation">
+    <Key>
+      <PropertyRef Name="IDMenuItem" />
+      <PropertyRef Name="IDLanguage" />
+    </Key>
+    <Property Name="IDMenuItem" Type="Int32" Nullable="false" />
+    <Property Name="IDLanguage" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tooltip" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Notes" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CFG_Languages" Relationship="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_Languages" FromRole="CFG_AppMenuItemsTranslation" ToRole="CFG_Languages" />
+    <NavigationProperty Name="CFG_AppMenuItems" Relationship="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems" FromRole="CFG_AppMenuItemsTranslation" ToRole="CFG_AppMenuItems" />
+  </EntityType>
+  <EntityType Name="CFG_Apps">
+    <Key>
+      <PropertyRef Name="IDApp" />
+    </Key>
+    <Property Name="IDApp" Type="Byte" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AssemblyPath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="AssemblyType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="CanEditAuthorizations" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CFG_AppMenues" Relationship="GENUINADB_Model.FK_CFG_AppMenues_CFG_Apps" FromRole="CFG_Apps" ToRole="CFG_AppMenues" />
+  </EntityType>
+  <EntityType Name="CFG_Languages">
+    <Key>
+      <PropertyRef Name="IDLanguage" />
+    </Key>
+    <Property Name="IDLanguage" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CFG_AppMenuesTranslation" Relationship="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_Languages" FromRole="CFG_Languages" ToRole="CFG_AppMenuesTranslation" />
+    <NavigationProperty Name="CFG_AppMenuItemsTranslation" Relationship="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_Languages" FromRole="CFG_Languages" ToRole="CFG_AppMenuItemsTranslation" />
+    <NavigationProperty Name="CFG_Users" Relationship="GENUINADB_Model.FK_CFG_Users_CFG_Languages" FromRole="CFG_Languages" ToRole="CFG_Users" />
+  </EntityType>
+  <EntityType Name="CFG_Users">
+    <Key>
+      <PropertyRef Name="IDUser" />
+    </Key>
+    <Property Name="IDUser" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="IDLanguage" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enabled" Type="Boolean" Nullable="false" />
+    <Property Name="MustChangePassword" Type="Boolean" Nullable="false" />
+    <Property Name="FailedLoginAttemps" Type="Int16" Nullable="false" />
+    <Property Name="LastAccess" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CFG_Languages" Relationship="GENUINADB_Model.FK_CFG_Users_CFG_Languages" FromRole="CFG_Users" ToRole="CFG_Languages" />
+    <NavigationProperty Name="CFG_UserGroups" Relationship="GENUINADB_Model.CFG_UsersInGroups" FromRole="CFG_Users" ToRole="CFG_UserGroups" />
+  </EntityType>
+  <Association Name="FK_CFG_AppMenuesTranslation_CFG_Languages">
+    <End Type="GENUINADB_Model.CFG_Languages" Role="CFG_Languages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GENUINADB_Model.CFG_AppMenuesTranslation" Role="CFG_AppMenuesTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Languages">
+        <PropertyRef Name="IDLanguage" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuesTranslation">
+        <PropertyRef Name="IDLanguage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuItemsTranslation_CFG_Languages">
+    <End Type="GENUINADB_Model.CFG_Languages" Role="CFG_Languages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GENUINADB_Model.CFG_AppMenuItemsTranslation" Role="CFG_AppMenuItemsTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Languages">
+        <PropertyRef Name="IDLanguage" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItemsTranslation">
+        <PropertyRef Name="IDLanguage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_Users_CFG_Languages">
+    <End Type="GENUINADB_Model.CFG_Languages" Role="CFG_Languages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GENUINADB_Model.CFG_Users" Role="CFG_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Languages">
+        <PropertyRef Name="IDLanguage" />
+      </Principal>
+      <Dependent Role="CFG_Users">
+        <PropertyRef Name="IDLanguage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CFG_AppMenues">
+    <Key>
+      <PropertyRef Name="IDMenuHeader" />
+    </Key>
+    <Property Name="IDMenuHeader" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDApp" Type="Byte" Nullable="false" />
+    <Property Name="Order" Type="Int16" Nullable="false" />
+    <Property Name="Enabled" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CFG_Apps" Relationship="GENUINADB_Model.FK_CFG_AppMenues_CFG_Apps" FromRole="CFG_AppMenues" ToRole="CFG_Apps" />
+    <NavigationProperty Name="CFG_AppMenuesTranslation" Relationship="GENUINADB_Model.FK_CFG_AppMenuesTranslation_CFG_AppMenues" FromRole="CFG_AppMenues" ToRole="CFG_AppMenuesTranslation" />
+    <NavigationProperty Name="CFG_AppMenuItems" Relationship="GENUINADB_Model.FK_CFG_AppMenuItems_CFG_AppMenues" FromRole="CFG_AppMenues" ToRole="CFG_AppMenuItems" />
+    <NavigationProperty Name="CFG_UserGroups" Relationship="GENUINADB_Model.CFG_AppMenuesAuthorizations" FromRole="CFG_AppMenues" ToRole="CFG_UserGroups" />
+  </EntityType>
+  <EntityType Name="CFG_AppMenuItems">
+    <Key>
+      <PropertyRef Name="IDMenuItem" />
+    </Key>
+    <Property Name="IDMenuItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDMenuHeader" Type="Int32" Nullable="false" />
+    <Property Name="AssemblyPath" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="AssemblyType" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="IsAssemblyPathAbsolute" Type="Boolean" Nullable="false" />
+    <Property Name="Order" Type="Int16" Nullable="false" />
+    <Property Name="Enabled" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CFG_AppMenues" Relationship="GENUINADB_Model.FK_CFG_AppMenuItems_CFG_AppMenues" FromRole="CFG_AppMenuItems" ToRole="CFG_AppMenues" />
+    <NavigationProperty Name="CFG_AppMenuItemsTranslation" Relationship="GENUINADB_Model.FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems" FromRole="CFG_AppMenuItems" ToRole="CFG_AppMenuItemsTranslation" />
+    <NavigationProperty Name="CFG_UserGroups" Relationship="GENUINADB_Model.CFG_AppMenuItemsAuthorizations" FromRole="CFG_AppMenuItems" ToRole="CFG_UserGroups" />
+  </EntityType>
+  <Association Name="FK_CFG_AppMenues_CFG_Apps">
+    <End Type="GENUINADB_Model.CFG_Apps" Role="CFG_Apps" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GENUINADB_Model.CFG_AppMenues" Role="CFG_AppMenues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Apps">
+        <PropertyRef Name="IDApp" />
+      </Principal>
+      <Dependent Role="CFG_AppMenues">
+        <PropertyRef Name="IDApp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuesTranslation_CFG_AppMenues">
+    <End Type="GENUINADB_Model.CFG_AppMenues" Role="CFG_AppMenues" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GENUINADB_Model.CFG_AppMenuesTranslation" Role="CFG_AppMenuesTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenues">
+        <PropertyRef Name="IDMenuHeader" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuesTranslation">
+        <PropertyRef Name="IDMenuHeader" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuItems_CFG_AppMenues">
+    <End Type="GENUINADB_Model.CFG_AppMenues" Role="CFG_AppMenues" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GENUINADB_Model.CFG_AppMenuItems" Role="CFG_AppMenuItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenues">
+        <PropertyRef Name="IDMenuHeader" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItems">
+        <PropertyRef Name="IDMenuHeader" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems">
+    <End Type="GENUINADB_Model.CFG_AppMenuItems" Role="CFG_AppMenuItems" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="GENUINADB_Model.CFG_AppMenuItemsTranslation" Role="CFG_AppMenuItemsTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenuItems">
+        <PropertyRef Name="IDMenuItem" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItemsTranslation">
+        <PropertyRef Name="IDMenuItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CFG_UserGroups">
+    <Key>
+      <PropertyRef Name="IDUserGroup" />
+    </Key>
+    <Property Name="IDUserGroup" Type="Int16" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Enabled" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CFG_AppMenues" Relationship="GENUINADB_Model.CFG_AppMenuesAuthorizations" FromRole="CFG_UserGroups" ToRole="CFG_AppMenues" />
+    <NavigationProperty Name="CFG_AppMenuItems" Relationship="GENUINADB_Model.CFG_AppMenuItemsAuthorizations" FromRole="CFG_UserGroups" ToRole="CFG_AppMenuItems" />
+    <NavigationProperty Name="CFG_Users" Relationship="GENUINADB_Model.CFG_UsersInGroups" FromRole="CFG_UserGroups" ToRole="CFG_Users" />
+  </EntityType>
+  <Association Name="CFG_AppMenuesAuthorizations">
+    <End Type="GENUINADB_Model.CFG_AppMenues" Role="CFG_AppMenues" Multiplicity="*" />
+    <End Type="GENUINADB_Model.CFG_UserGroups" Role="CFG_UserGroups" Multiplicity="*" />
+  </Association>
+  <Association Name="CFG_AppMenuItemsAuthorizations">
+    <End Type="GENUINADB_Model.CFG_AppMenuItems" Role="CFG_AppMenuItems" Multiplicity="*" />
+    <End Type="GENUINADB_Model.CFG_UserGroups" Role="CFG_UserGroups" Multiplicity="*" />
+  </Association>
+  <EntityType Name="CFG_Casinos">
+    <Key>
+      <PropertyRef Name="IDCasino" />
+    </Key>
+    <Property Name="IDCasino" Type="Byte" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LogoPath" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="IDCountryCity" Type="Int32" Nullable="false" />
+    <Property Name="IDCasinoGroup" Type="Byte" Nullable="false" />
+    <Property Name="IDLanguageByDefault" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="IDPostalCode" Type="Int64" Nullable="false" />
+    <Property Name="IDCultureInfo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CurrencySymbol" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CurrencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StandardCurrencyFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CustomCurrencyFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DecimalSymbol" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="DigitGroupingSymbol" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="StandardNumberFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CustomNumberFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ShortDateFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ShortTimeFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ShortDateTimeFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LongDateFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LongTimeFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LongDateTimeFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="CFG_UsersInGroups">
+    <End Type="GENUINADB_Model.CFG_UserGroups" Role="CFG_UserGroups" Multiplicity="*" />
+    <End Type="GENUINADB_Model.CFG_Users" Role="CFG_Users" Multiplicity="*" />
+  </Association>
+  <EntityType Name="DBVersionGnSy">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MajorVersion" Type="Int32" Nullable="false" />
+    <Property Name="MinorVersion" Type="Int32" Nullable="false" />
+    <Property Name="RevisionVersion" Type="Int32" Nullable="false" />
+    <Property Name="TextVersion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <ComplexType Name="MarketingPlayerST">
+    <Property Type="String" Name="IDPlayer" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Gender" Nullable="false" MaxLength="6" />
+    <Property Type="DateTime" Name="BirthdayDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="SlotNumber" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="AccountBalance" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Handle" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Win" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="Active" Nullable="false" MaxLength="3" />
+    <Property Type="String" Name="Category" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="NRCredits" Nullable="false" />
+    <Property Type="Decimal" Name="LPAvailable" Nullable="true" Precision="19" Scale="2" />
+    <Property Type="Decimal" Name="LPConsumed" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="Segment_RFM" Nullable="false" MaxLength="7" />
+    <Property Type="String" Name="Segment_Classic" Nullable="false" MaxLength="7" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Cellular" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="PostalCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Occupation" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Language" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="MeritalStatus" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="RFC" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="CURP" Nullable="false" MaxLength="100" />
+    <Property Type="DateTime" Name="AccountCreationDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="DocType" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="DocNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="NickName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="MarketingPlayerActivityST">
+    <Property Type="Decimal" Name="NetWin" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="Handle" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BuyIn" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="SessionTime" Nullable="false" />
+    <Property Type="Decimal" Name="PromoGranted" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PromoConsumed" Nullable="false" Precision="19" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="MarketingPlayerReferencesST">
+    <Property Type="String" Name="Game" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Provider" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="GameType" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="WinLoss" Nullable="true" Precision="38" Scale="4" />
+    <Property Type="Int32" Name="Duration" Nullable="true" />
+    <Property Type="Decimal" Name="Handle" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="AverageBet" Nullable="false" />
+    <Property Type="Int32" Name="Visits" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="MarketingPlayerTrendsST">
+    <Property Type="DateTime" Name="LastWeekDay" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="Handle" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="Visits" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="MarketingPlayerCardsST">
+    <Property Type="String" Name="BLCardNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Status" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="IssueMathod" Nullable="false" MaxLength="6" />
+    <Property Type="DateTime" Name="FirstUse" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="Balance" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int64" Name="IDPlayerAccount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="MarketingPlayerCashDeskST">
+    <Property Type="String" Name="BLCardNumber" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="Time" Nullable="false" Precision="23" />
+    <Property Type="String" Name="TicketNumber" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Cashier" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="AmountIN" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AmountOUT" Nullable="false" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="MarketingPlayerPromoST">
+    <Property Type="String" Name="Promo" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="4" />
+    <Property Type="DateTime" Name="DateTimeAssigned" Nullable="false" Precision="23" />
+    <Property Type="String" Name="BLCardNumberPaid" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="MarketingPlayerGameHistoryST">
+    <Property Type="DateTime" Name="DateTimeStart" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Game" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Provider" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="GameType" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="WinLoss" Nullable="false" Precision="18" Scale="4" />
+    <Property Type="Int32" Name="Duration" Nullable="false" />
+    <Property Type="Decimal" Name="Handle" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="AverageBet" Nullable="false" />
+    <Property Type="String" Name="SlotNUmber" Nullable="false" MaxLength="15" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GENUINADB_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CFG_AppMenues">
+    <Key>
+      <PropertyRef Name="IDMenuHeader" />
+    </Key>
+    <Property Name="IDMenuHeader" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDApp" Type="tinyint" Nullable="false" />
+    <Property Name="Order" Type="smallint" Nullable="false" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_AppMenuesAuthorizations">
+    <Key>
+      <PropertyRef Name="IDMenuHeader" />
+      <PropertyRef Name="IDUserGroup" />
+    </Key>
+    <Property Name="IDMenuHeader" Type="int" Nullable="false" />
+    <Property Name="IDUserGroup" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_AppMenuesTranslation">
+    <Key>
+      <PropertyRef Name="IDMenuHeader" />
+      <PropertyRef Name="IDLanguage" />
+    </Key>
+    <Property Name="IDMenuHeader" Type="int" Nullable="false" />
+    <Property Name="IDLanguage" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tooltip" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_AppMenuItems">
+    <Key>
+      <PropertyRef Name="IDMenuItem" />
+    </Key>
+    <Property Name="IDMenuItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDMenuHeader" Type="int" Nullable="false" />
+    <Property Name="AssemblyPath" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="AssemblyType" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="IsAssemblyPathAbsolute" Type="bit" Nullable="false" />
+    <Property Name="Order" Type="smallint" Nullable="false" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_AppMenuItemsAuthorizations">
+    <Key>
+      <PropertyRef Name="IDUserGroup" />
+      <PropertyRef Name="IDMenuItem" />
+    </Key>
+    <Property Name="IDUserGroup" Type="smallint" Nullable="false" />
+    <Property Name="IDMenuItem" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_AppMenuItemsTranslation">
+    <Key>
+      <PropertyRef Name="IDMenuItem" />
+      <PropertyRef Name="IDLanguage" />
+    </Key>
+    <Property Name="IDMenuItem" Type="int" Nullable="false" />
+    <Property Name="IDLanguage" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tooltip" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_Apps">
+    <Key>
+      <PropertyRef Name="IDApp" />
+    </Key>
+    <Property Name="IDApp" Type="tinyint" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AssemblyPath" Type="varchar" MaxLength="500" />
+    <Property Name="AssemblyType" Type="varchar" MaxLength="500" />
+    <Property Name="CanEditAuthorizations" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_Casinos">
+    <Key>
+      <PropertyRef Name="IDCasino" />
+    </Key>
+    <Property Name="IDCasino" Type="tinyint" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LogoPath" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="IDCountryCity" Type="int" Nullable="false" />
+    <Property Name="IDCasinoGroup" Type="tinyint" Nullable="false" />
+    <Property Name="IDLanguageByDefault" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="IDPostalCode" Type="bigint" Nullable="false" />
+    <Property Name="IDCultureInfo" Type="varchar" MaxLength="10" />
+    <Property Name="CurrencySymbol" Type="varchar" MaxLength="10" />
+    <Property Name="CurrencyName" Type="varchar" MaxLength="50" />
+    <Property Name="StandardCurrencyFormat" Type="varchar" MaxLength="50" />
+    <Property Name="CustomCurrencyFormat" Type="varchar" MaxLength="50" />
+    <Property Name="DecimalSymbol" Type="varchar" MaxLength="2" />
+    <Property Name="DigitGroupingSymbol" Type="varchar" MaxLength="2" />
+    <Property Name="StandardNumberFormat" Type="varchar" MaxLength="50" />
+    <Property Name="CustomNumberFormat" Type="varchar" MaxLength="50" />
+    <Property Name="ShortDateFormat" Type="varchar" MaxLength="50" />
+    <Property Name="ShortTimeFormat" Type="varchar" MaxLength="50" />
+    <Property Name="ShortDateTimeFormat" Type="varchar" MaxLength="50" />
+    <Property Name="LongDateFormat" Type="varchar" MaxLength="50" />
+    <Property Name="LongTimeFormat" Type="varchar" MaxLength="50" />
+    <Property Name="LongDateTimeFormat" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CFG_Languages">
+    <Key>
+      <PropertyRef Name="IDLanguage" />
+    </Key>
+    <Property Name="IDLanguage" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_UserGroups">
+    <Key>
+      <PropertyRef Name="IDUserGroup" />
+    </Key>
+    <Property Name="IDUserGroup" Type="smallint" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CFG_Users">
+    <Key>
+      <PropertyRef Name="IDUser" />
+    </Key>
+    <Property Name="IDUser" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="IDLanguage" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="500" />
+    <Property Name="Enabled" Type="bit" Nullable="false" />
+    <Property Name="MustChangePassword" Type="bit" Nullable="false" />
+    <Property Name="FailedLoginAttemps" Type="smallint" Nullable="false" />
+    <Property Name="LastAccess" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CFG_UsersInGroups">
+    <Key>
+      <PropertyRef Name="IDUser" />
+      <PropertyRef Name="IDUserGroup" />
+    </Key>
+    <Property Name="IDUser" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="IDUserGroup" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DBVersionGnSys">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MajorVersion" Type="int" Nullable="false" />
+    <Property Name="MinorVersion" Type="int" Nullable="false" />
+    <Property Name="RevisionVersion" Type="int" Nullable="false" />
+    <Property Name="TextVersion" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GBI_CFG_DashboardCharts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="ChartName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ChartGroupName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ChartType" Type="nvarchar" MaxLength="50" />
+    <Property Name="AddedToDashboard" Type="bit" Nullable="false" />
+    <Property Name="ChartIcon" Type="nvarchar" MaxLength="50" />
+    <Property Name="ChartBgColor" Type="nvarchar" MaxLength="25" />
+  </EntityType>
+  <Association Name="FK_CFG_AppMenues_CFG_Apps">
+    <End Role="CFG_Apps" Type="Self.CFG_Apps" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenues" Type="Self.CFG_AppMenues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Apps">
+        <PropertyRef Name="IDApp" />
+      </Principal>
+      <Dependent Role="CFG_AppMenues">
+        <PropertyRef Name="IDApp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuesTranslation_CFG_AppMenues">
+    <End Role="CFG_AppMenues" Type="Self.CFG_AppMenues" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuesTranslation" Type="Self.CFG_AppMenuesTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenues">
+        <PropertyRef Name="IDMenuHeader" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuesTranslation">
+        <PropertyRef Name="IDMenuHeader" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuesTranslation_CFG_Languages">
+    <End Role="CFG_Languages" Type="Self.CFG_Languages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuesTranslation" Type="Self.CFG_AppMenuesTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Languages">
+        <PropertyRef Name="IDLanguage" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuesTranslation">
+        <PropertyRef Name="IDLanguage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuItems_CFG_AppMenues">
+    <End Role="CFG_AppMenues" Type="Self.CFG_AppMenues" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuItems" Type="Self.CFG_AppMenuItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenues">
+        <PropertyRef Name="IDMenuHeader" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItems">
+        <PropertyRef Name="IDMenuHeader" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems">
+    <End Role="CFG_AppMenuItems" Type="Self.CFG_AppMenuItems" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuItemsTranslation" Type="Self.CFG_AppMenuItemsTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenuItems">
+        <PropertyRef Name="IDMenuItem" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItemsTranslation">
+        <PropertyRef Name="IDMenuItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_AppMenuItemsTranslation_CFG_Languages">
+    <End Role="CFG_Languages" Type="Self.CFG_Languages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuItemsTranslation" Type="Self.CFG_AppMenuItemsTranslation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Languages">
+        <PropertyRef Name="IDLanguage" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItemsTranslation">
+        <PropertyRef Name="IDLanguage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_MenuHeaderAuthorizations_CFG_AppMenues">
+    <End Role="CFG_AppMenues" Type="Self.CFG_AppMenues" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuesAuthorizations" Type="Self.CFG_AppMenuesAuthorizations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenues">
+        <PropertyRef Name="IDMenuHeader" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuesAuthorizations">
+        <PropertyRef Name="IDMenuHeader" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_MenuHeaderAuthorizations_CFG_UserGroups">
+    <End Role="CFG_UserGroups" Type="Self.CFG_UserGroups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuesAuthorizations" Type="Self.CFG_AppMenuesAuthorizations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_UserGroups">
+        <PropertyRef Name="IDUserGroup" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuesAuthorizations">
+        <PropertyRef Name="IDUserGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_MenuItemAuthorizations_CFG_AppMenuItems">
+    <End Role="CFG_AppMenuItems" Type="Self.CFG_AppMenuItems" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuItemsAuthorizations" Type="Self.CFG_AppMenuItemsAuthorizations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_AppMenuItems">
+        <PropertyRef Name="IDMenuItem" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItemsAuthorizations">
+        <PropertyRef Name="IDMenuItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_MenuItemAuthorizations_CFG_UserGroups">
+    <End Role="CFG_UserGroups" Type="Self.CFG_UserGroups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_AppMenuItemsAuthorizations" Type="Self.CFG_AppMenuItemsAuthorizations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_UserGroups">
+        <PropertyRef Name="IDUserGroup" />
+      </Principal>
+      <Dependent Role="CFG_AppMenuItemsAuthorizations">
+        <PropertyRef Name="IDUserGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_Users_CFG_Languages">
+    <End Role="CFG_Languages" Type="Self.CFG_Languages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_Users" Type="Self.CFG_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Languages">
+        <PropertyRef Name="IDLanguage" />
+      </Principal>
+      <Dependent Role="CFG_Users">
+        <PropertyRef Name="IDLanguage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_UsersInGroups_CFG_UserGroups">
+    <End Role="CFG_UserGroups" Type="Self.CFG_UserGroups" Multiplicity="1" />
+    <End Role="CFG_UsersInGroups" Type="Self.CFG_UsersInGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_UserGroups">
+        <PropertyRef Name="IDUserGroup" />
+      </Principal>
+      <Dependent Role="CFG_UsersInGroups">
+        <PropertyRef Name="IDUserGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CFG_UsersInGroups_CFG_Users">
+    <End Role="CFG_Users" Type="Self.CFG_Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CFG_UsersInGroups" Type="Self.CFG_UsersInGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CFG_Users">
+        <PropertyRef Name="IDUser" />
+      </Principal>
+      <Dependent Role="CFG_UsersInGroups">
+        <PropertyRef Name="IDUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="GBI_RPT_CF_ResumenOperation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateTimeStart" Type="datetime" Mode="In" />
+    <Parameter Name="DateTimeEnd" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_CF_ResumenOperation_Trend" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Day" Type="datetime" Mode="In" />
+    <Parameter Name="DefaultStartTime" Type="char" Mode="In" />
+    <Parameter Name="DefaultEndTime" Type="char" Mode="In" />
+    <Parameter Name="num" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_CF_ResumenOperation2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateTimeStart" Type="datetime" Mode="In" />
+    <Parameter Name="DateTimeEnd" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_12" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateStart" Type="datetime" Mode="In" />
+    <Parameter Name="DateEnd" Type="datetime" Mode="In" />
+    <Parameter Name="Qty" Type="int" Mode="In" />
+    <Parameter Name="Visit" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_30" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BD" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_ACTIVITY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+    <Parameter Name="StartDate" Type="datetime" Mode="In" />
+    <Parameter Name="EndDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_CARDS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_CASHDESK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_GAME_HISTORY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_PREFERENCES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+    <Parameter Name="StartDate" Type="datetime" Mode="In" />
+    <Parameter Name="EndDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_PROFILE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_PROMO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_MK_PLAYER_TRENDS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDPlayer" Type="varchar" Mode="In" />
+    <Parameter Name="StartDate" Type="datetime" Mode="In" />
+    <Parameter Name="EndDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="GBI_RPT_SL_GetTotalSlots" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateTimeStart" Type="datetime" Mode="In" />
+    <Parameter Name="DateTimeEnd" Type="datetime" Mode="In" />
+  </Function>
+  <EntityContainer Name="GENUINADB_ModelStoreContainer">
+    <EntitySet Name="CFG_AppMenues" EntityType="Self.CFG_AppMenues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_AppMenuesAuthorizations" EntityType="Self.CFG_AppMenuesAuthorizations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_AppMenuesTranslation" EntityType="Self.CFG_AppMenuesTranslation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_AppMenuItems" EntityType="Self.CFG_AppMenuItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_AppMenuItemsAuthorizations" EntityType="Self.CFG_AppMenuItemsAuthorizations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_AppMenuItemsTranslation" EntityType="Self.CFG_AppMenuItemsTranslation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_Apps" EntityType="Self.CFG_Apps" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_Casinos" EntityType="Self.CFG_Casinos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_Languages" EntityType="Self.CFG_Languages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_UserGroups" EntityType="Self.CFG_UserGroups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_Users" EntityType="Self.CFG_Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CFG_UsersInGroups" EntityType="Self.CFG_UsersInGroups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DBVersionGnSys" EntityType="Self.DBVersionGnSys" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GBI_CFG_DashboardCharts" EntityType="Self.GBI_CFG_DashboardCharts" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CFG_AppMenues_CFG_Apps" Association="Self.FK_CFG_AppMenues_CFG_Apps">
+      <End Role="CFG_Apps" EntitySet="CFG_Apps" />
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuesTranslation_CFG_AppMenues" Association="Self.FK_CFG_AppMenuesTranslation_CFG_AppMenues">
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+      <End Role="CFG_AppMenuesTranslation" EntitySet="CFG_AppMenuesTranslation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuesTranslation_CFG_Languages" Association="Self.FK_CFG_AppMenuesTranslation_CFG_Languages">
+      <End Role="CFG_Languages" EntitySet="CFG_Languages" />
+      <End Role="CFG_AppMenuesTranslation" EntitySet="CFG_AppMenuesTranslation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuItems_CFG_AppMenues" Association="Self.FK_CFG_AppMenuItems_CFG_AppMenues">
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+      <End Role="CFG_AppMenuItems" EntitySet="CFG_AppMenuItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems" Association="Self.FK_CFG_AppMenuItemsTranslation_CFG_AppMenuItems">
+      <End Role="CFG_AppMenuItems" EntitySet="CFG_AppMenuItems" />
+      <End Role="CFG_AppMenuItemsTranslation" EntitySet="CFG_AppMenuItemsTranslation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_AppMenuItemsTranslation_CFG_Languages" Association="Self.FK_CFG_AppMenuItemsTranslation_CFG_Languages">
+      <End Role="CFG_Languages" EntitySet="CFG_Languages" />
+      <End Role="CFG_AppMenuItemsTranslation" EntitySet="CFG_AppMenuItemsTranslation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_MenuHeaderAuthorizations_CFG_AppMenues" Association="Self.FK_CFG_MenuHeaderAuthorizations_CFG_AppMenues">
+      <End Role="CFG_AppMenues" EntitySet="CFG_AppMenues" />
+      <End Role="CFG_AppMenuesAuthorizations" EntitySet="CFG_AppMenuesAuthorizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_MenuHeaderAuthorizations_CFG_UserGroups" Association="Self.FK_CFG_MenuHeaderAuthorizations_CFG_UserGroups">
+      <End Role="CFG_UserGroups" EntitySet="CFG_UserGroups" />
+      <End Role="CFG_AppMenuesAuthorizations" EntitySet="CFG_AppMenuesAuthorizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_MenuItemAuthorizations_CFG_AppMenuItems" Association="Self.FK_CFG_MenuItemAuthorizations_CFG_AppMenuItems">
+      <End Role="CFG_AppMenuItems" EntitySet="CFG_AppMenuItems" />
+      <End Role="CFG_AppMenuItemsAuthorizations" EntitySet="CFG_AppMenuItemsAuthorizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_MenuItemAuthorizations_CFG_UserGroups" Association="Self.FK_CFG_MenuItemAuthorizations_CFG_UserGroups">
+      <End Role="CFG_UserGroups" EntitySet="CFG_UserGroups" />
+      <End Role="CFG_AppMenuItemsAuthorizations" EntitySet="CFG_AppMenuItemsAuthorizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_Users_CFG_Languages" Association="Self.FK_CFG_Users_CFG_Languages">
+      <End Role="CFG_Languages" EntitySet="CFG_Languages" />
+      <End Role="CFG_Users" EntitySet="CFG_Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_UsersInGroups_CFG_UserGroups" Association="Self.FK_CFG_UsersInGroups_CFG_UserGroups">
+      <End Role="CFG_UserGroups" EntitySet="CFG_UserGroups" />
+      <End Role="CFG_UsersInGroups" EntitySet="CFG_UsersInGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CFG_UsersInGroups_CFG_Users" Association="Self.FK_CFG_UsersInGroups_CFG_Users">
+      <End Role="CFG_Users" EntitySet="CFG_Users" />
+      <End Role="CFG_UsersInGroups" EntitySet="CFG_UsersInGroups" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

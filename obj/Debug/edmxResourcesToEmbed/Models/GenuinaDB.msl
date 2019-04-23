@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GENUINADB_ModelStoreContainer" CdmEntityContainer="GenuinaDBEntities">
+    <FunctionImportMapping FunctionImportName="GetSlotOccupationList" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_30">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.SlotOccupationST">
+          <ScalarProperty Name="Hora" ColumnName="Hora" />
+          <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+          <ScalarProperty Name="HoraFin" ColumnName="HoraFin" />
+          <ScalarProperty Name="Players" ColumnName="Players" />
+          <ScalarProperty Name="Slots" ColumnName="Slots" />
+          <ScalarProperty Name="TotalSession" ColumnName="TotalSession" />
+          <ScalarProperty Name="WinLoss" ColumnName="WinLoss" />
+          <ScalarProperty Name="Handle" ColumnName="Handle" />
+          <ScalarProperty Name="TotalPlayers" ColumnName="TotalPlayers" />
+          <ScalarProperty Name="TotalSlotsOcuped" ColumnName="TotalSlotsOcuped" />
+          <ScalarProperty Name="DateTimeStart" ColumnName="DateTimeStart" />
+          <ScalarProperty Name="DateTimeEnd" ColumnName="DateTimeEnd" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetTotalSlots" FunctionName="GENUINADB_Model.Store.GBI_RPT_SL_GetTotalSlots" />
+    <FunctionImportMapping FunctionImportName="GetOperationSummaryList" FunctionName="GENUINADB_Model.Store.GBI_RPT_CF_ResumenOperation">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.OperationSummaryST">
+          <ScalarProperty Name="AmountIn" ColumnName="AmountIn" />
+          <ScalarProperty Name="AmountOut" ColumnName="AmountOut" />
+          <ScalarProperty Name="Taxes" ColumnName="Taxes" />
+          <ScalarProperty Name="TotalSesiones" ColumnName="TotalSesiones" />
+          <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
+          <ScalarProperty Name="OcupacionPeriodo" ColumnName="OcupacionPeriodo" />
+          <ScalarProperty Name="Promociones" ColumnName="Promociones" />
+          <ScalarProperty Name="EspecialPromo" ColumnName="EspecialPromo" />
+          <ScalarProperty Name="CanceledPromo" ColumnName="CanceledPromo" />
+          <ScalarProperty Name="NamePromo20" ColumnName="NamePromo20" />
+          <ScalarProperty Name="TotalHP" ColumnName="TotalHP" />
+          <ScalarProperty Name="TotalJP" ColumnName="TotalJP" />
+          <ScalarProperty Name="TotalSlots" ColumnName="TotalSlots" />
+          <ScalarProperty Name="TotalSlotsOcuped" ColumnName="TotalSlotsOcuped" />
+          <ScalarProperty Name="AmountPlayerAccountVariation" ColumnName="AmountPlayerAccountVariation" />
+          <ScalarProperty Name="PlayerAccountIN" ColumnName="PlayerAccountIN" />
+          <ScalarProperty Name="PlayerAccountOUT" ColumnName="PlayerAccountOUT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetOperationSummaryProviderList" FunctionName="GENUINADB_Model.Store.GBI_RPT_CF_ResumenOperation2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.OperationSummaryProviderST">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IDGMManufacturer" ColumnName="IDGMManufacturer" />
+          <ScalarProperty Name="CashOut" ColumnName="CashOut" />
+          <ScalarProperty Name="CashIN" ColumnName="CashIN" />
+          <ScalarProperty Name="Sesiones" ColumnName="Sesiones" />
+          <ScalarProperty Name="CantPlayer" ColumnName="CantPlayer" />
+          <ScalarProperty Name="HandPayments" ColumnName="HandPayments" />
+          <ScalarProperty Name="PROMO_IN" ColumnName="PROMO_IN" />
+          <ScalarProperty Name="PROMO_OUT" ColumnName="PROMO_OUT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="GBI_CFG_DashboardCharts">
+      <EntityTypeMapping TypeName="GENUINADB_Model.GBI_CFG_DashboardCharts">
+        <MappingFragment StoreEntitySet="GBI_CFG_DashboardCharts">
+          <ScalarProperty Name="ChartBgColor" ColumnName="ChartBgColor" />
+          <ScalarProperty Name="ChartIcon" ColumnName="ChartIcon" />
+          <ScalarProperty Name="AddedToDashboard" ColumnName="AddedToDashboard" />
+          <ScalarProperty Name="ChartType" ColumnName="ChartType" />
+          <ScalarProperty Name="ChartGroupName" ColumnName="ChartGroupName" />
+          <ScalarProperty Name="ChartName" ColumnName="ChartName" />
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetTopPlayerList" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_12">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.TopPlayerInfoST">
+          <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+          <ScalarProperty Name="BirthdayDate" ColumnName="BirthdayDate" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="LastVisit" ColumnName="LastVisit" />
+          <ScalarProperty Name="TotalVisits" ColumnName="TotalVisits" />
+          <ScalarProperty Name="WinLoss" ColumnName="WinLoss" />
+          <ScalarProperty Name="Handle" ColumnName="Handle" />
+          <ScalarProperty Name="Telofono" ColumnName="Telofono" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetOperationSummaryTrendList" FunctionName="GENUINADB_Model.Store.GBI_RPT_CF_ResumenOperation_Trend">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.OperationSummaryTrendST">
+          <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+          <ScalarProperty Name="DayDifference" ColumnName="DayDifference" />
+          <ScalarProperty Name="HardSoftCountBill" ColumnName="HardSoftCountBill" />
+          <ScalarProperty Name="AmountIn" ColumnName="AmountIn" />
+          <ScalarProperty Name="AmountOut" ColumnName="AmountOut" />
+          <ScalarProperty Name="Taxes" ColumnName="Taxes" />
+          <ScalarProperty Name="HandPayments" ColumnName="HandPayments" />
+          <ScalarProperty Name="Jackpots" ColumnName="Jackpots" />
+          <ScalarProperty Name="CashIn" ColumnName="CashIn" />
+          <ScalarProperty Name="CashOut" ColumnName="CashOut" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="CFG_AppMenuesTranslation">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_AppMenuesTranslation">
+        <MappingFragment StoreEntitySet="CFG_AppMenuesTranslation">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IDLanguage" ColumnName="IDLanguage" />
+          <ScalarProperty Name="IDMenuHeader" ColumnName="IDMenuHeader" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CFG_AppMenuItemsTranslation">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_AppMenuItemsTranslation">
+        <MappingFragment StoreEntitySet="CFG_AppMenuItemsTranslation">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IDLanguage" ColumnName="IDLanguage" />
+          <ScalarProperty Name="IDMenuItem" ColumnName="IDMenuItem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CFG_Apps">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_Apps">
+        <MappingFragment StoreEntitySet="CFG_Apps">
+          <ScalarProperty Name="CanEditAuthorizations" ColumnName="CanEditAuthorizations" />
+          <ScalarProperty Name="AssemblyType" ColumnName="AssemblyType" />
+          <ScalarProperty Name="AssemblyPath" ColumnName="AssemblyPath" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IDApp" ColumnName="IDApp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CFG_Languages">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_Languages">
+        <MappingFragment StoreEntitySet="CFG_Languages">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IDLanguage" ColumnName="IDLanguage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CFG_Users">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_Users">
+        <MappingFragment StoreEntitySet="CFG_Users">
+          <ScalarProperty Name="LastAccess" ColumnName="LastAccess" />
+          <ScalarProperty Name="FailedLoginAttemps" ColumnName="FailedLoginAttemps" />
+          <ScalarProperty Name="MustChangePassword" ColumnName="MustChangePassword" />
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="IDLanguage" ColumnName="IDLanguage" />
+          <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CFG_AppMenues">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_AppMenues">
+        <MappingFragment StoreEntitySet="CFG_AppMenues">
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="IDApp" ColumnName="IDApp" />
+          <ScalarProperty Name="IDMenuHeader" ColumnName="IDMenuHeader" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CFG_AppMenuItems">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_AppMenuItems">
+        <MappingFragment StoreEntitySet="CFG_AppMenuItems">
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="IsAssemblyPathAbsolute" ColumnName="IsAssemblyPathAbsolute" />
+          <ScalarProperty Name="AssemblyType" ColumnName="AssemblyType" />
+          <ScalarProperty Name="AssemblyPath" ColumnName="AssemblyPath" />
+          <ScalarProperty Name="IDMenuHeader" ColumnName="IDMenuHeader" />
+          <ScalarProperty Name="IDMenuItem" ColumnName="IDMenuItem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CFG_UserGroups">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_UserGroups">
+        <MappingFragment StoreEntitySet="CFG_UserGroups">
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IDUserGroup" ColumnName="IDUserGroup" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CFG_AppMenuesAuthorizations" TypeName="GENUINADB_Model.CFG_AppMenuesAuthorizations" StoreEntitySet="CFG_AppMenuesAuthorizations">
+      <EndProperty Name="CFG_UserGroups">
+        <ScalarProperty Name="IDUserGroup" ColumnName="IDUserGroup" />
+      </EndProperty>
+      <EndProperty Name="CFG_AppMenues">
+        <ScalarProperty Name="IDMenuHeader" ColumnName="IDMenuHeader" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CFG_AppMenuItemsAuthorizations" TypeName="GENUINADB_Model.CFG_AppMenuItemsAuthorizations" StoreEntitySet="CFG_AppMenuItemsAuthorizations">
+      <EndProperty Name="CFG_UserGroups">
+        <ScalarProperty Name="IDUserGroup" ColumnName="IDUserGroup" />
+      </EndProperty>
+      <EndProperty Name="CFG_AppMenuItems">
+        <ScalarProperty Name="IDMenuItem" ColumnName="IDMenuItem" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="CFG_Casinos">
+      <EntityTypeMapping TypeName="GENUINADB_Model.CFG_Casinos">
+        <MappingFragment StoreEntitySet="CFG_Casinos">
+          <ScalarProperty Name="LongDateTimeFormat" ColumnName="LongDateTimeFormat" />
+          <ScalarProperty Name="LongTimeFormat" ColumnName="LongTimeFormat" />
+          <ScalarProperty Name="LongDateFormat" ColumnName="LongDateFormat" />
+          <ScalarProperty Name="ShortDateTimeFormat" ColumnName="ShortDateTimeFormat" />
+          <ScalarProperty Name="ShortTimeFormat" ColumnName="ShortTimeFormat" />
+          <ScalarProperty Name="ShortDateFormat" ColumnName="ShortDateFormat" />
+          <ScalarProperty Name="CustomNumberFormat" ColumnName="CustomNumberFormat" />
+          <ScalarProperty Name="StandardNumberFormat" ColumnName="StandardNumberFormat" />
+          <ScalarProperty Name="DigitGroupingSymbol" ColumnName="DigitGroupingSymbol" />
+          <ScalarProperty Name="DecimalSymbol" ColumnName="DecimalSymbol" />
+          <ScalarProperty Name="CustomCurrencyFormat" ColumnName="CustomCurrencyFormat" />
+          <ScalarProperty Name="StandardCurrencyFormat" ColumnName="StandardCurrencyFormat" />
+          <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
+          <ScalarProperty Name="CurrencySymbol" ColumnName="CurrencySymbol" />
+          <ScalarProperty Name="IDCultureInfo" ColumnName="IDCultureInfo" />
+          <ScalarProperty Name="IDPostalCode" ColumnName="IDPostalCode" />
+          <ScalarProperty Name="IDLanguageByDefault" ColumnName="IDLanguageByDefault" />
+          <ScalarProperty Name="IDCasinoGroup" ColumnName="IDCasinoGroup" />
+          <ScalarProperty Name="IDCountryCity" ColumnName="IDCountryCity" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LogoPath" ColumnName="LogoPath" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IDCasino" ColumnName="IDCasino" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CFG_UsersInGroups" TypeName="GENUINADB_Model.CFG_UsersInGroups" StoreEntitySet="CFG_UsersInGroups">
+      <EndProperty Name="CFG_Users">
+        <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+      </EndProperty>
+      <EndProperty Name="CFG_UserGroups">
+        <ScalarProperty Name="IDUserGroup" ColumnName="IDUserGroup" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="DBVersionGnSys">
+      <EntityTypeMapping TypeName="GENUINADB_Model.DBVersionGnSy">
+        <MappingFragment StoreEntitySet="DBVersionGnSys">
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+          <ScalarProperty Name="TextVersion" ColumnName="TextVersion" />
+          <ScalarProperty Name="RevisionVersion" ColumnName="RevisionVersion" />
+          <ScalarProperty Name="MinorVersion" ColumnName="MinorVersion" />
+          <ScalarProperty Name="MajorVersion" ColumnName="MajorVersion" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayer" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_PROFILE">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerST">
+          <ScalarProperty Name="IDPlayer" ColumnName="IDPlayer" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="BirthdayDate" ColumnName="BirthdayDate" />
+          <ScalarProperty Name="SlotNumber" ColumnName="SlotNumber" />
+          <ScalarProperty Name="AccountBalance" ColumnName="AccountBalance" />
+          <ScalarProperty Name="Handle" ColumnName="Handle" />
+          <ScalarProperty Name="Win" ColumnName="Win" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="NRCredits" ColumnName="NRCredits" />
+          <ScalarProperty Name="LPAvailable" ColumnName="LPAvailable" />
+          <ScalarProperty Name="LPConsumed" ColumnName="LPConsumed" />
+          <ScalarProperty Name="Segment_RFM" ColumnName="Segment_RFM" />
+          <ScalarProperty Name="Segment_Classic" ColumnName="Segment_Classic" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Cellular" ColumnName="Cellular" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="MeritalStatus" ColumnName="MeritalStatus" />
+          <ScalarProperty Name="RFC" ColumnName="RFC" />
+          <ScalarProperty Name="CURP" ColumnName="CURP" />
+          <ScalarProperty Name="AccountCreationDate" ColumnName="AccountCreationDate" />
+          <ScalarProperty Name="DocType" ColumnName="DocType" />
+          <ScalarProperty Name="DocNumber" ColumnName="DocNumber" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayerReferences" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_PREFERENCES">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerReferencesST">
+          <ScalarProperty Name="Game" ColumnName="Game" />
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
+          <ScalarProperty Name="GameType" ColumnName="GameType" />
+          <ScalarProperty Name="WinLoss" ColumnName="WinLoss" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Handle" ColumnName="Handle" />
+          <ScalarProperty Name="AverageBet" ColumnName="AverageBet" />
+          <ScalarProperty Name="Visits" ColumnName="Visits" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayerTrends" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_TRENDS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerTrendsST">
+          <ScalarProperty Name="LastWeekDay" ColumnName="LastWeekDay" />
+          <ScalarProperty Name="Handle" ColumnName="Handle" />
+          <ScalarProperty Name="Visits" ColumnName="Visits" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayerActivity" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_ACTIVITY">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerActivityST">
+          <ScalarProperty Name="NetWin" ColumnName="NetWin" />
+          <ScalarProperty Name="Handle" ColumnName="Handle" />
+          <ScalarProperty Name="BuyIn" ColumnName="BuyIn" />
+          <ScalarProperty Name="SessionTime" ColumnName="SessionTime" />
+          <ScalarProperty Name="PromoGranted" ColumnName="PromoGranted" />
+          <ScalarProperty Name="PromoConsumed" ColumnName="PromoConsumed" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayerCards" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_CARDS">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerCardsST">
+          <ScalarProperty Name="BLCardNumber" ColumnName="BLCardNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IssueMathod" ColumnName="IssueMathod" />
+          <ScalarProperty Name="FirstUse" ColumnName="FirstUse" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="IDPlayerAccount" ColumnName="IDPlayerAccount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayerCashDesk" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_CASHDESK">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerCashDeskST">
+          <ScalarProperty Name="BLCardNumber" ColumnName="BLCardNumber" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+          <ScalarProperty Name="Cashier" ColumnName="Cashier" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AmountIN" ColumnName="AmountIN" />
+          <ScalarProperty Name="AmountOUT" ColumnName="AmountOUT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayerGameHistory" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_GAME_HISTORY">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerGameHistoryST">
+          <ScalarProperty Name="DateTimeStart" ColumnName="DateTimeStart" />
+          <ScalarProperty Name="Game" ColumnName="Game" />
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
+          <ScalarProperty Name="GameType" ColumnName="GameType" />
+          <ScalarProperty Name="WinLoss" ColumnName="WinLoss" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Handle" ColumnName="Handle" />
+          <ScalarProperty Name="AverageBet" ColumnName="AverageBet" />
+          <ScalarProperty Name="SlotNUmber" ColumnName="SlotNUmber" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetMarketingPlayerPromo" FunctionName="GENUINADB_Model.Store.GBI_RPT_MK_PLAYER_PROMO">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GENUINADB_Model.MarketingPlayerPromoST">
+          <ScalarProperty Name="Promo" ColumnName="Promo" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="DateTimeAssigned" ColumnName="DateTimeAssigned" />
+          <ScalarProperty Name="BLCardNumberPaid" ColumnName="BLCardNumberPaid" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
